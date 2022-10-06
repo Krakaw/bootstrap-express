@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 
-import { version } from '../package.json';
+import { version } from '../../package.json';
 
 const app = express();
 

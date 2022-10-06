@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import request from 'supertest';
-import app from '~/app';
+import app from '~/server/app';
 
 describe('App', () => {
     before((done) => {

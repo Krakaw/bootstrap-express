@@ -1,16 +1,17 @@
 {
-  "name": "contractinator",
+  "name": "express-template",
   "version": "0.0.1",
-  "description": "Fetch NFT data",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "mocha -r tsconfig-paths/register -r ts-node/register  \"./src/test/**/*.ts\" ",
-    "dev": "nodemon",
+    "dev": "nodemon -- server",
+    "dev-process": "nodemon -- process",
     "start": "node -r ./bootstrap.js build/app.js",
     "build": "tsc --build tsconfig.build.json",
     "lint": "eslint \"./src/**/*.ts\"",
     "prettier:check": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --check --ignore-unknown",
-    "prettier:write": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --write --ignore-unknown"
+    "prettier:fix": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --write --ignore-unknown"
   },
   "lint-staged": {
     "./src/**/*.+(ts|js)": [
@@ -20,17 +21,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Krakaw/contractinator.git"
+    "url": "git+https://github.com/Krakaw/bootstrap-express.git"
   },
   "author": "Krakaw",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Krakaw/contractinator/issues"
+    "url": "https://github.com/Krakaw/bootstrap-express/issues"
   },
-  "homepage": "https://github.com/Krakaw/contractinator#readme",
+  "homepage": "https://github.com/Krakaw/bootstrap-express#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "pino": "^8.6.1",
+    "pino-pretty": "^9.1.1",
+    "yargs": "^17.6.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
@@ -38,6 +42,7 @@
     "@types/express": "^4.17.14",
     "@types/mocha": "^10.0.0",
     "@types/supertest": "^2.0.12",
+    "@types/yargs": "^17.0.13",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
     "chai": "^4.3.6",
