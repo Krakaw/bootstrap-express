@@ -1,4 +1,5 @@
 import pino from 'pino';
+import { Arguments } from 'yargs';
 import yargs from 'yargs/yargs';
 import startProcessor from '~/processor';
 import startServer from '~/server';
@@ -8,7 +9,7 @@ import { version } from '../package.json';
 
 /** Set Up Logging */
 const pinoConfig = {
-    name: 'server',
+    name: config.app.name,
     level: config.log.level,
     transport: {
         target: config.log.target
@@ -17,12 +18,10 @@ const pinoConfig = {
 
 const logger = pino(pinoConfig);
 
-async function init(argv: any) {
+async function init(argv: Arguments) {
     logger.debug(`Version: ${version}`);
-    const command = (argv._.length ? argv._ : ['server'])
-        .pop()
-        .toLowerCase()
-        .trim();
+    const { _ = ['server'] } = argv;
+    const command = ((_.pop() as string) || '').toLowerCase()?.trim();
     switch (command) {
         case 'process':
             await startProcessor({ logger });
@@ -38,4 +37,4 @@ const { argv } = yargs(process.argv.slice(2))
     .strict()
     .help('h');
 
-init(argv).catch((e) => console.error(e));
+init(argv as Arguments).catch((e) => logger.error(e));
