@@ -34,12 +34,13 @@
     "@typescript-eslint/explicit-module-boundary-types":[
       "error"
     ],
+    "@typescript-eslint/no-explicit-any": "off",
     "no-trailing-spaces":"error",
     "import/extensions":"off",
     "max-len":[
       "error",
       {
-        "code":100,
+        "code":180,
         "tabWidth":2,
         "ignoreComments":true,
         "ignoreStrings":true

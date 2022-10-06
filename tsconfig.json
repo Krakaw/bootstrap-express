@@ -15,7 +15,7 @@
 		], /* Specify a set of bundled library declaration files that describe the target runtime environment */
 		"outDir": "build", /* Specifies the folder for the emitted code */
 		"strict": true, /* Enables all the strict type-checking options */
-		"noImplicitAny": true, /* Enables errors with expressions using 'any' */
+		"noImplicitAny": false, /* Enables errors with expressions using 'any' */
 		"resolveJsonModule": true, /* Enables importing json files */
 		"moduleResolution": "node", /* Specifies how typescript looks up a file for a given module */
 		"forceConsistentCasingInFileNames": true /* Ensure that casing is okay in imports */
