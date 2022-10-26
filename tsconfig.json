@@ -3,11 +3,6 @@
 		"allowJs": true, /* Allows javascript files to be part of our code */
 		"esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility */
 		"baseUrl": "./src", /* Specifies the base directory to resolve non-relative module names */
-		"paths": { /* This one specifies a set of entries to re-map imports */
-			"~/*": [
-				"./*"
-			]
-		},
 		"module": "commonjs", /* Specifies which module code is generated */
 		"target": "es5", /* Sets the javascript version of the emitted typescript */
 		"lib": [

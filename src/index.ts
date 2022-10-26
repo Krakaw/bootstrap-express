@@ -1,9 +1,8 @@
 import pino from 'pino';
 import { Arguments } from 'yargs';
-import yargs from 'yargs/yargs';
-import startProcessor from '~/processor';
-import startServer from '~/server';
-import config from '~/utils/config';
+import startProcessor from './processor';
+import startServer from './server';
+import config from './utils/config';
 
 import { version } from '../package.json';
 import initializeCli from "./cli";

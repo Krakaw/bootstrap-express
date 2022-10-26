@@ -1,6 +1,6 @@
 import amqplib, { Channel, Connection, ConsumeMessage } from 'amqplib';
 import { Logger } from 'pino';
-import config from '~/utils/config.js';
+import config from '../utils/config.js';
 
 let staticConnection: Connection;
 

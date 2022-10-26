@@ -1,6 +1,6 @@
 import CreateClient from 'ioredis';
 import { Logger } from 'pino';
-import { RedisConfig } from '~/utils/config';
+import { RedisConfig } from '../utils/config';
 
 export default class Redis {
     public readonly client;
