@@ -6,10 +6,7 @@ export default function initializeCli(): Arguments {
             // API Server
             .command('server', 'Start the API server')
             // Processors
-
-            .command('processor', 'Start the process worker', {
-
-            })
+            .command('processor', 'Start the process worker', {})
             // CLI
             .strict()
             .help()

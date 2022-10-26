@@ -34,7 +34,10 @@
     "@typescript-eslint/explicit-module-boundary-types":[
       "error"
     ],
+    "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/no-explicit-any": "off",
+    "no-shadow": "off",
+    "class-methods-use-this": "off",
     "no-trailing-spaces":"error",
     "import/extensions":"off",
     "max-len":[
