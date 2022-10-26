@@ -6,6 +6,7 @@ import startServer from '~/server';
 import config from '~/utils/config';
 
 import { version } from '../package.json';
+import initializeCli from "./cli";
 
 /** Set Up Logging */
 const pinoConfig = {
@@ -30,11 +31,8 @@ async function init(argv: Arguments) {
             await startServer({ logger });
     }
 }
-const { argv } = yargs(process.argv.slice(2))
-    .command('server', 'Start the API server')
-    .command('process', 'Start a process worker')
-    .demandCommand(1, 1, 'Choose a command: server or process')
-    .strict()
-    .help('h');
-
-init(argv as Arguments).catch((e) => logger.error(e));
+const cliArgs: Arguments = initializeCli();
+init(cliArgs).then(() => {
+    logger.info('Completed');
+    process.exit(0);
+}).catch((e) => logger.error(e));
