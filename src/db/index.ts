@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import config from '~/utils/config';
+import config from '../utils/config';
 
 // Import Migrations
 

@@ -1,6 +1,6 @@
 import { Logger } from 'pino';
-import app from '~/server/app';
-import config from '~/utils/config';
+import app from './app';
+import config from '../utils/config';
 
 export default ({ logger }: { logger: Logger }): void => {
     app.listen(config.server.port, config.server.host, () => {
