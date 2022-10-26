@@ -1,11 +1,11 @@
 import pino from 'pino';
 import { Arguments } from 'yargs';
+
+import { version } from '../package.json';
+import initializeCli from './cli';
 import startProcessor from './processor';
 import startServer from './server';
 import config from './utils/config';
-
-import { version } from '../package.json';
-import initializeCli from "./cli";
 
 /** Set Up Logging */
 const pinoConfig = {
@@ -31,7 +31,9 @@ async function init(argv: Arguments) {
     }
 }
 const cliArgs: Arguments = initializeCli();
-init(cliArgs).then(() => {
-    logger.info('Completed');
-    process.exit(0);
-}).catch((e) => logger.error(e));
+init(cliArgs)
+    .then(() => {
+        logger.info('Completed');
+        process.exit(0);
+    })
+    .catch((e) => logger.error(e));

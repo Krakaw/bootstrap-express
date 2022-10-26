@@ -1,5 +1,5 @@
-import Queue from './index';
 import { JobData } from '../services/rabbit';
+import Queue from './index';
 
 export interface ProcessJobData {
     data: string;

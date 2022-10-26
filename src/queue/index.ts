@@ -1,5 +1,6 @@
 import { Logger } from 'pino';
 import { DataSource } from 'typeorm';
+
 import Rabbit, { JobData, ProcessJob } from '../services/rabbit';
 import Redis from '../services/redis';
 
