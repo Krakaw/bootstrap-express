@@ -1,0 +1,12 @@
+node_modules/
+.idea/
+.vscode/
+dist/
+build/
+meta/
+.git/
+docker-compose.yml
+.gitignore
+README.md
+.env
+.env.sample

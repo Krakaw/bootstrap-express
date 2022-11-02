@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky install",
     "test": "mocha -r tsconfig-paths/register -r ts-node/register  \"./src/test/**/*.ts\" ",
+    "d": "nodemon -- ",
     "dev": "nodemon -- server",
     "dev-process": "nodemon -- process",
-    "start": "node -r ./bootstrap.js build/app.js",
     "build": "tsc --build tsconfig.build.json",
     "lint": "eslint \"./src/**/*.ts\"",
     "prettier:check": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --check --ignore-unknown",
@@ -15,6 +16,7 @@
     "typeorm": "typeorm-ts-node-esm -d src/db/index.ts",
     "db:migrations:run": "npm run typeorm -- migration:run",
     "db:migrations:revert": "npm run typeorm -- migration:revert",
+    "db:migrations:create": "typeorm-ts-node-esm migration:create ",
     "db:migrations:generate": "npm run typeorm -- migration:generate"
   },
   "lint-staged": {

@@ -1,6 +1,6 @@
-import { Logger } from 'pino';
+import { Services } from '../types/services';
 
-export default ({ logger }: { logger: Logger }): void => {
+export default ({ logger }: Services): void => {
     logger.info('⚡ processor running');
     // TODO: Implement processor
 };

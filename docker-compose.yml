@@ -1,0 +1,36 @@
+version: "3"
+services:
+  db:
+    image: postgres:14
+    shm_size: 1gb
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+  redis:
+    image: redis
+    command: [ "redis-server", "--appendonly", "yes" ]
+    volumes:
+      - redis:/data
+    ports:
+      - "6379:6379"
+  rabbit:
+    image: rabbitmq:3.10-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    ports:
+      # AMQP protocol port
+      - '5672:5672'
+      # HTTP management UI
+      - '15672:15672'
+
+volumes:
+  postgres:
+  redis:
+  rabbitmq:
+

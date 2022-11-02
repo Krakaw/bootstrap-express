@@ -1,10 +1,7 @@
 import { DataSource } from 'typeorm';
 
 import config from '../utils/config';
-
-// Import Migrations
-
-// Import Entities
+import Model from './models/model';
 
 export default new DataSource({
     type: 'postgres',
@@ -15,7 +12,7 @@ export default new DataSource({
     database: config.db.database,
     synchronize: false,
     logging: false,
-    entities: [],
+    entities: [Model],
     subscribers: [],
     migrations: []
 });
