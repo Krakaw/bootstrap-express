@@ -1,16 +1,20 @@
+import EventEmitter from 'events';
 import CreateClient from 'ioredis';
 import { Logger } from 'pino';
 
-import { RedisConfig } from '../utils/config';
+import systemConfig, { RedisConfig } from '../utils/config';
 
-export default class Redis {
+export const enum RedisKeys {}
+
+export class Redis extends EventEmitter {
     public readonly client;
 
     private readonly logger;
 
     constructor(config: RedisConfig, logger: Logger) {
+        super();
         this.logger = logger.child({
-            redisName: config.name || config.prefix || 'N/A'
+            service: 'redis'
         });
         const redisConfig: any = { ...config };
         delete redisConfig.url;
@@ -20,7 +24,10 @@ export default class Redis {
         this.client.on('error', (err: any) =>
             this.logger.error('Redis Client Error', err)
         );
-        this.client.on('ready', () => this.logger.debug(`Redis connected`));
+        this.client.on('ready', () => {
+            this.logger.debug(`Redis connected`);
+            this.emit('ready');
+        });
     }
 
     async mExists(keys: string[]): Promise<number> {
@@ -79,3 +86,5 @@ export default class Redis {
         return this.client.flushall();
     }
 }
+
+export default (logger: Logger): Redis => new Redis(systemConfig.redis, logger);

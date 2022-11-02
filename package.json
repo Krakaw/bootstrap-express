@@ -35,6 +35,7 @@
   "homepage": "https://github.com/Krakaw/bootstrap-express#readme",
   "dependencies": {
     "amqplib": "^0.10.3",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "ioredis": "^5.2.3",
