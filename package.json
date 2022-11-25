@@ -1,78 +1,78 @@
 {
-  "name": "express-template",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "prepare": "husky install",
-    "test": "mocha -r tsconfig-paths/register -r ts-node/register  \"./src/test/**/*.ts\" ",
-    "d": "nodemon -- ",
-    "dev": "nodemon -- server",
-    "dev-process": "nodemon -- process",
-    "build": "tsc --build tsconfig.build.json",
-    "lint": "eslint \"./src/**/*.ts\"",
-    "prettier:check": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --check --ignore-unknown",
-    "prettier:fix": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --write --ignore-unknown",
-    "typeorm": "typeorm-ts-node-esm -d src/db/index.ts",
-    "db:migrations:run": "npm run typeorm -- migration:run",
-    "db:migrations:revert": "npm run typeorm -- migration:revert",
-    "db:migrations:create": "typeorm-ts-node-esm migration:create ",
-    "db:migrations:generate": "npm run typeorm -- migration:generate"
-  },
-  "lint-staged": {
-    "./src/**/*.+(ts|js)": [
-      "npm run lint",
-      "npm run prettier:check"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Krakaw/bootstrap-express.git"
-  },
-  "author": "Krakaw",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Krakaw/bootstrap-express/issues"
-  },
-  "homepage": "https://github.com/Krakaw/bootstrap-express#readme",
-  "dependencies": {
-    "amqplib": "^0.10.3",
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.1",
-    "ioredis": "^5.2.3",
-    "pg": "^8.8.0",
-    "pino": "^8.6.1",
-    "pino-pretty": "^9.1.1",
-    "typeorm": "^0.3.10",
-    "typeorm-naming-strategies": "^4.1.0",
-    "yargs": "^17.6.0"
-  },
-  "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^3.4.0",
-    "@types/amqplib": "^0.8.2",
-    "@types/chai": "^4.3.3",
-    "@types/express": "^4.17.14",
-    "@types/mocha": "^10.0.0",
-    "@types/supertest": "^2.0.12",
-    "@types/yargs": "^17.0.13",
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.39.0",
-    "chai": "^4.3.6",
-    "eslint": "^8.24.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^3.5.1",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "mocha": "^10.0.0",
-    "nodemon": "^2.0.20",
-    "prettier": "^2.7.1",
-    "supertest": "^6.3.0",
-    "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.1.0",
-    "typescript": "^4.8.4"
-  }
+    "name": "express-template",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "prepare": "husky install",
+        "test": "mocha -r tsconfig-paths/register -r ts-node/register  \"./src/test/**/*.ts\" ",
+        "d": "nodemon -- ",
+        "dev": "nodemon -- server",
+        "dev-process": "nodemon -- process",
+        "build": "tsc --build tsconfig.build.json",
+        "lint": "eslint \"./src/**/*.ts\"",
+        "prettier:check": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --check --ignore-unknown",
+        "prettier:fix": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --write --ignore-unknown",
+        "typeorm": "typeorm-ts-node-esm -d src/db/index.ts",
+        "db:migrations:run": "npm run typeorm -- migration:run",
+        "db:migrations:revert": "npm run typeorm -- migration:revert",
+        "db:migrations:create": "typeorm-ts-node-esm migration:create ",
+        "db:migrations:generate": "npm run typeorm -- migration:generate -p"
+    },
+    "lint-staged": {
+        "./src/**/*.+(ts|js)": [
+            "npm run lint",
+            "npm run prettier:check"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Krakaw/bootstrap-express.git"
+    },
+    "author": "Krakaw",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Krakaw/bootstrap-express/issues"
+    },
+    "homepage": "https://github.com/Krakaw/bootstrap-express#readme",
+    "dependencies": {
+        "amqplib": "^0.10.3",
+        "cookie-parser": "^1.4.6",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.1",
+        "ioredis": "^5.2.3",
+        "pg": "^8.8.0",
+        "pino": "^8.6.1",
+        "pino-pretty": "^9.1.1",
+        "typeorm": "^0.3.10",
+        "typeorm-naming-strategies": "^4.1.0",
+        "yargs": "^17.6.0"
+    },
+    "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^3.4.0",
+        "@types/amqplib": "^0.8.2",
+        "@types/chai": "^4.3.3",
+        "@types/express": "^4.17.14",
+        "@types/mocha": "^10.0.0",
+        "@types/supertest": "^2.0.12",
+        "@types/yargs": "^17.0.13",
+        "@typescript-eslint/eslint-plugin": "^5.39.0",
+        "@typescript-eslint/parser": "^5.39.0",
+        "chai": "^4.3.6",
+        "eslint": "^8.24.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-import-resolver-typescript": "^3.5.1",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "husky": "^8.0.1",
+        "lint-staged": "^13.0.3",
+        "mocha": "^10.0.0",
+        "nodemon": "^2.0.20",
+        "prettier": "^2.7.1",
+        "supertest": "^6.3.0",
+        "ts-node": "^10.9.1",
+        "tsconfig-paths": "^4.1.0",
+        "typescript": "^4.8.4"
+    }
 }
