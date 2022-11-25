@@ -11,15 +11,6 @@ import config from './utils/config';
 import Kill from './utils/kill';
 import appLogger, { Logger } from './utils/logger';
 
-/** Set Up Logging */
-const pinoConfig = {
-    name: config.app.name,
-    level: config.log.level,
-    transport: {
-        target: config.log.target
-    }
-};
-
 appLogger.debug(`Version: ${version}`);
 
 const initializeServices = async (logger: Logger): Promise<Services> => {

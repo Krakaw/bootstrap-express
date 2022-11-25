@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 import config from '../utils/config';
 import Model from './models/model';
@@ -14,5 +15,6 @@ export default new DataSource({
     logging: false,
     entities: [Model],
     subscribers: [],
-    migrations: []
+    migrations: [],
+    namingStrategy: new SnakeNamingStrategy()
 });

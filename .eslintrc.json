@@ -37,6 +37,7 @@
     "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "no-shadow": "off",
+    "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
     "no-trailing-spaces":"error",
     "import/extensions":"off",
