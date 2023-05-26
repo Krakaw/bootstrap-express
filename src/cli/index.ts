@@ -1,6 +1,7 @@
 import { Arguments } from 'yargs';
 
 import { version } from '../../package.json';
+import initCron from '../cronjob';
 import startProcessor from '../processor';
 import startServer from '../server';
 import initServices from '../services';
@@ -13,6 +14,9 @@ export default async function init(argv: Arguments): Promise<void> {
     const { _ = ['server'] } = argv;
     const command = ((_.pop() as string) || '').toLowerCase()?.trim();
     switch (command) {
+        case Command.Cron:
+            await initCron(services);
+            break;
         case Command.Queue:
             {
                 const { name } = argv;

@@ -2,7 +2,8 @@ import yargs from 'yargs';
 
 export enum Command {
     Server = 'server',
-    Queue = 'queue'
+    Queue = 'queue',
+    Cron = 'cron'
 }
 
 export enum CommandQueue {
@@ -11,6 +12,7 @@ export enum CommandQueue {
 
 const { argv } = yargs(process.argv.slice(2))
     .command(Command.Server, 'Start the API server')
+    .command(Command.Cron, 'Start the cron worker')
     .command(Command.Queue, 'Start a queue worker', {
         name: {
             alias: 'n',
