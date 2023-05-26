@@ -3,6 +3,7 @@ import express, { Express, Request, Response } from 'express';
 
 import { version } from '../../package.json';
 import { Services } from '../types/services';
+import logger from '../utils/logger';
 import appRouter from './routes';
 
 export default function initApp(services: Services): Express {
@@ -21,5 +22,16 @@ export default function initApp(services: Services): Express {
         res.send(version);
     });
     app.use('/', appRouter);
+    app.use((err, req, res, _next) => {
+        logger.error(err, 'Catch-All Error');
+        const { message } = err;
+        if (message.startsWith('invalid input syntax')) {
+            res.status(400).json({
+                message: 'Invalid ID'
+            });
+        } else {
+            res.status(500).send('Something broke!');
+        }
+    });
     return app;
 }

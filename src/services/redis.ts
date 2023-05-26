@@ -18,7 +18,6 @@ export class Redis extends EventEmitter {
         delete redisConfig.url;
         delete redisConfig.prefix;
 
-        console.log(redisConfig);
         this.client = new CreateClient(redisConfig);
         this.client.on('error', (err: any) =>
             this.logger.error({ message: 'Redis Client Error', err })
