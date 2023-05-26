@@ -1,0 +1,25 @@
+import yargs from 'yargs';
+
+export enum Command {
+    Server = 'server',
+    Queue = 'queue'
+}
+
+export enum CommandQueue {
+    Processor = 'processor'
+}
+
+const { argv } = yargs(process.argv.slice(2))
+    .command(Command.Server, 'Start the API server')
+    .command(Command.Queue, 'Start a queue worker', {
+        name: {
+            alias: 'n',
+            description: 'Queue name to start',
+            demandOption: true,
+            enum: [CommandQueue.Processor]
+        }
+    })
+    .demandCommand(1, 1, 'Choose a command from the list above')
+    .strict()
+    .help('h');
+export default argv;

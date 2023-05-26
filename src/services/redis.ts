@@ -4,8 +4,6 @@ import { Logger } from 'pino';
 
 import systemConfig, { RedisConfig } from '../utils/config';
 
-export const enum RedisKeys {}
-
 export class Redis extends EventEmitter {
     public readonly client;
 
@@ -20,14 +18,19 @@ export class Redis extends EventEmitter {
         delete redisConfig.url;
         delete redisConfig.prefix;
 
+        console.log(redisConfig);
         this.client = new CreateClient(redisConfig);
         this.client.on('error', (err: any) =>
-            this.logger.error('Redis Client Error', err)
+            this.logger.error({ message: 'Redis Client Error', err })
         );
         this.client.on('ready', () => {
             this.logger.debug(`Redis connected`);
             this.emit('ready');
         });
+    }
+
+    async disconnect(): Promise<void> {
+        await this.client.quit();
     }
 
     async mExists(keys: string[]): Promise<number> {

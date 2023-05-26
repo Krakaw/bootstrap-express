@@ -10,17 +10,20 @@ export default class Kill extends EventEmitter {
         super();
         this.logger = logger;
         process.on('SIGINT', () => {
+            logger.trace('SIGINT received');
             this.kill('SIGINT');
         }); // CTRL+C
         process.on('SIGQUIT', () => {
+            logger.trace('SIGQUIT received');
             this.kill('SIGQUIT');
         }); // Keyboard quit
         process.on('SIGTERM', () => {
+            logger.trace('SIGTERM received');
             this.kill('SIGTERM');
         }); // `kill` command
     }
 
-    private kill(signal: string) {
+    public kill(signal: string): void {
         this.logger.debug(`${signal} received`);
 
         if (this.count === 0) {

@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
 
+import parseBoolean from './parseBoolean';
+
 dotenv.config();
 
 export interface RedisConfig {
@@ -11,6 +13,7 @@ export interface RedisConfig {
     maxRetriesPerRequest?: number | null;
     enableReadyCheck?: boolean;
     prefix?: string;
+    lazyConnect?: boolean;
 }
 
 export function getRedisConfigFromEnv(env: never, prefix: ''): RedisConfig {
@@ -26,7 +29,8 @@ export function getRedisConfigFromEnv(env: never, prefix: ''): RedisConfig {
         REDIS_HOST: { convert: toString, key: 'host' },
         REDIS_PORT: { convert: toInt, key: 'port' },
         REDIS_PASSWORD: { convert: toString, key: 'password' },
-        REDIS_DB: { convert: toInt, key: 'db' }
+        REDIS_DB: { convert: toInt, key: 'db' },
+        REDIS_LAZY_CONNECT: { convert: parseBoolean, key: 'lazyConnect' }
     };
     const result = { prefix } as RedisConfig;
     Object.keys(redisKeys).forEach((key: string) => {
@@ -45,7 +49,8 @@ export function getRedisConfigFromEnv(env: never, prefix: ''): RedisConfig {
 const env = { ...process.env };
 export default {
     app: {
-        name: env.NAME || 'server'
+        name: env.NAME || 'server',
+        isTest: parseBoolean(env.IS_TEST || false)
     },
     db: {
         username: env.POSTGRES_USER,
@@ -60,13 +65,31 @@ export default {
     },
     queue: {
         // Rabbit queue url
-        rabbitUrl: env.QUEUE_URL || 'amqp://localhost:5672',
+        rabbitUrl: env.RABBITMQ_URL ?? 'amqp://localhost:5672',
         // Rabbit Queue Name
-        queueName: env.QUEUE_NAME || 'process-queue',
+        queueName: env.RABBITMQ_QUEUE_NAME || 'process-queue',
+        // Rabbit Exchange Details
+        exchange: {
+            // Rabbit Exchange Name
+            name: env.RABBITMQ_EXCHANGE_NAME || 'process-exchange',
+            // Rabbit Exchange Type
+            type: env.RABBITMQ_EXCHANGE_TYPE || 'fanout',
+            // Rabbit Exchange Options
+            options: {
+                // Rabbit Exchange Durable
+                durable: parseBoolean(env.RABBITMQ_EXCHANGE_DURABLE || true),
+                // Rabbit Exchange Auto Delete
+                autoDelete: parseBoolean(
+                    env.RABBITMQ_EXCHANGE_AUTO_DELETE || false
+                )
+            }
+        },
         // The max jobs to pull per worker
-        maxRunningJobs: parseInt(env.MAX_RUNNING_JOBS || '1', 10),
+        maxRunningJobs: parseInt(env.RABBITMQ_MAX_RUNNING_JOBS || '1', 10),
         // Maximum number of retries for a job
-        workerRetryMax: parseInt(env.WORKER_RETRY_MAX || '1', 10)
+        workerRetryMax: parseInt(env.RABBITMQ_WORKER_RETRY_MAX || '1', 10),
+        // Retry strategy
+        workerRetryStrategy: env.RABBITMQ_WORKER_RETRY_STRATEGY || 'exponential'
     },
     redis: getRedisConfigFromEnv(env as never, ''),
     server: {
