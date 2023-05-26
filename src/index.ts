@@ -9,5 +9,5 @@ init(argv as Arguments)
         logger.info('Exiting cleanly');
     })
     .catch((error) => {
-        logger.error({ error, message: 'Uncaught error in init' });
+        logger.error('Exiting with error %s', error);
     });
