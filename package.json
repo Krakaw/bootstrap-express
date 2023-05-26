@@ -13,11 +13,12 @@
         "lint": "eslint \"./src/**/*.ts\"",
         "prettier:check": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --check --ignore-unknown",
         "prettier:fix": "prettier --config .prettierrc \"./src/**/*.+(js|json|ts)\" --write --ignore-unknown",
-        "typeorm": "typeorm-ts-node-esm -d src/db/index.ts",
+        "typeorm": "typeorm-ts-node-esm -d src/db/migration.ts",
         "db:migrations:run": "npm run typeorm -- migration:run",
         "db:migrations:revert": "npm run typeorm -- migration:revert",
         "db:migrations:create": "typeorm-ts-node-esm migration:create ",
-        "db:migrations:generate": "npm run typeorm -- migration:generate -p"
+        "db:migrations:generate": "npm run typeorm -- migration:generate -p",
+        "prod:db:migrations:run": "typeorm -d src/db/migration.js migration:run"
     },
     "lint-staged": {
         "./src/**/*.+(ts|js)": [
