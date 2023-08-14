@@ -1,5 +1,6 @@
 import EventEmitter from 'events';
 import CreateClient from 'ioredis';
+import IoRedisMock from 'ioredis-mock';
 import { Logger } from 'pino';
 
 import systemConfig, { RedisConfig } from '../utils/config';
@@ -18,7 +19,9 @@ export class Redis extends EventEmitter {
         delete redisConfig.url;
         delete redisConfig.prefix;
 
-        this.client = new CreateClient(redisConfig);
+        this.client = systemConfig.app.isTest
+            ? new IoRedisMock()
+            : new CreateClient(redisConfig);
         this.client.on('error', (err: any) =>
             this.logger.error({ message: 'Redis Client Error', err })
         );

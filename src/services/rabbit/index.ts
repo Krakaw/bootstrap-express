@@ -1,4 +1,5 @@
 import amqplib, { Connection } from 'amqplib';
+import mockAmqplib from 'mock-amqplib';
 
 import config from '../../utils/config';
 import { Logger } from '../../utils/logger';
@@ -39,6 +40,9 @@ export default class RabbitConnection {
         if (this.connected) {
             this.logger.debug('Reusing RabbitMQ connection');
             return;
+        }
+        if (config.app.isTest) {
+            amqplib.connect = mockAmqplib.connect;
         }
         this.connection = await amqplib.connect(rabbitUrl, {
             clientProperties: { connection_name: process.env.HOSTNAME }

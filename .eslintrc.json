@@ -31,20 +31,22 @@
     }
   },
   "rules":{
+    "import/prefer-default-export": "off",
+    "no-shadow": "off",
+    "class-methods-use-this": "off",
     "@typescript-eslint/explicit-module-boundary-types":[
       "error"
     ],
-    "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/no-explicit-any": "off",
-    "no-shadow": "off",
-    "import/prefer-default-export": "off",
-    "class-methods-use-this": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
     "no-trailing-spaces":"error",
     "import/extensions":"off",
+    "import/order": "off",
     "max-len":[
       "error",
       {
-        "code":180,
+        "code":240,
         "tabWidth":2,
         "ignoreComments":true,
         "ignoreStrings":true
