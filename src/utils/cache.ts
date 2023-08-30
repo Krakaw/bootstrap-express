@@ -3,13 +3,16 @@ import { EventEmitter } from 'events';
 interface ExpiringValue<T> {
     data: T;
     expiryTimestamp?: number;
+    count?: number;
+    removeTimeout?: NodeJS.Timeout;
 }
-export default class Cache<T> {
+export default class Cache<T> extends EventEmitter {
     cache: Map<string, ExpiringValue<T>>;
 
     inFlightRequests: Map<string, EventEmitter>;
 
     constructor() {
+        super();
         this.cache = new Map();
         this.inFlightRequests = new Map();
     }
@@ -30,7 +33,8 @@ export default class Cache<T> {
     async set(
         key: string,
         value: T | (() => Promise<T>),
-        expiryMs?: number
+        expiryMs?: number,
+        emitOnExpire?: boolean
     ): Promise<T> {
         // Check the inflight requests first
         const inFlightRequest = this.inFlightRequests.get(key);
@@ -53,14 +57,29 @@ export default class Cache<T> {
         } else {
             innerValue = value;
         }
+        const oldValue = this.cache.get(key);
+        if (oldValue?.removeTimeout) {
+            clearTimeout(oldValue.removeTimeout);
+        }
         this.cache.set(key, {
             data: innerValue as T,
-            expiryTimestamp: expiryMs ? Date.now() + expiryMs : undefined
+            expiryTimestamp: expiryMs ? Date.now() + expiryMs : undefined,
+            count: oldValue?.count ? oldValue.count + 1 : 1,
+            removeTimeout:
+                expiryMs && emitOnExpire
+                    ? setTimeout(() => {
+                          this.delete(key, true);
+                      }, expiryMs)
+                    : undefined
         });
+
         return innerValue;
     }
 
-    delete(key: string): void {
+    delete(key: string, emit?: boolean): void {
+        if (emit) {
+            this.emit('expired', { key, value: this.cache.get(key) });
+        }
         this.cache.delete(key);
     }
 
