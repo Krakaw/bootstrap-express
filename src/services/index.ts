@@ -32,7 +32,14 @@ function initQueues(services: CoreServices): Queues {
     };
 }
 
-async function cleanup({ kill, logger, dataSource, rabbit, redis }: Services) {
+async function cleanup({
+    kill,
+    logger,
+    dataSource,
+    rabbit,
+    redis,
+    pubsub
+}: Services) {
     kill.on('kill', async () => {
         logger.debug('Stopping database');
         await dataSource.destroy();
@@ -42,6 +49,8 @@ async function cleanup({ kill, logger, dataSource, rabbit, redis }: Services) {
         await rabbit.disconnect();
         logger.debug('Stopping redis');
         await redis.disconnect();
+        logger.debug('Stopping pubsub');
+        await pubsub.stop();
     });
 }
 
@@ -80,8 +89,7 @@ export default async function initServices(): Promise<Services> {
         kill
     };
 
-    const pubsubRedis = new Redis(config.redis, logger);
-    const pubsub = new Pubsub(pubsubRedis);
+    const pubsub = new Pubsub(redis.duplicate());
 
     const queues = initQueues(coreServices);
     dataSource.insertQueues(queues);

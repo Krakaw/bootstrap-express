@@ -10,9 +10,18 @@ export class Redis extends EventEmitter {
 
     private readonly logger;
 
-    constructor(config: RedisConfig, logger: Logger) {
+    constructor(redis: Redis);
+
+    constructor(config: RedisConfig, logger: Logger);
+
+    constructor(config: RedisConfig | Redis, logger?: Logger) {
         super();
-        this.logger = logger.child({
+        if (config instanceof Redis) {
+            this.client = config.client.duplicate();
+            this.logger = config.logger;
+            return;
+        }
+        this.logger = logger?.child({
             service: 'redis'
         });
         const redisConfig: any = { ...config };
@@ -29,6 +38,10 @@ export class Redis extends EventEmitter {
             this.logger.debug(`Redis connected`);
             this.emit('ready');
         });
+    }
+
+    duplicate(): Redis {
+        return new Redis(this);
     }
 
     async disconnect(): Promise<void> {
