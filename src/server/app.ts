@@ -23,13 +23,17 @@ export default function initApp(services: Services): Express {
     });
     app.use('/', appRouter);
     app.use((err, req, res, _next) => {
-        logger.error(err, 'Catch-All Error');
         const { message } = err;
         if (message.startsWith('invalid input syntax')) {
             res.status(400).json({
                 message: 'Invalid ID'
             });
+        } else if (message.startsWith('Could not find any entity of type')) {
+            res.status(404).json({
+                message: 'Could not find entity'
+            });
         } else {
+            logger.error(err, 'Catch-All Error');
             res.status(500).send('Something broke!');
         }
     });
