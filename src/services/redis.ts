@@ -35,6 +35,10 @@ export class Redis extends EventEmitter {
         await this.client.quit();
     }
 
+    async publish(channel: string, message: string): Promise<number> {
+        return this.client.publish(channel, message);
+    }
+
     async mExists(keys: string[]): Promise<number> {
         return this.client.exists(keys);
     }

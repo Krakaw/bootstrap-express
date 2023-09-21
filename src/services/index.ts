@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import initDb, { initTestDb } from '../db';
+import { Pubsub } from '../pubsub';
 import Queue, { IQueueConstructor } from '../queue';
 import ProcessQueue from '../queue/process';
 import { CoreServices, Queues, Services } from '../types/services';
@@ -79,11 +80,15 @@ export default async function initServices(): Promise<Services> {
         kill
     };
 
+    const pubsubRedis = new Redis(config.redis, logger);
+    const pubsub = new Pubsub(pubsubRedis);
+
     const queues = initQueues(coreServices);
     dataSource.insertQueues(queues);
     const services: Services = {
         ...coreServices,
-        queues
+        queues,
+        pubsub
     };
 
     // eslint-disable-next-line no-restricted-syntax

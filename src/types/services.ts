@@ -1,4 +1,5 @@
 import { type DataSourceWithRepositories } from '../db';
+import { Pubsub } from '../pubsub';
 import type ProcessQueue from '../queue/process';
 import RabbitConnection from '../services/rabbit';
 import { Redis } from '../services/redis';
@@ -18,4 +19,5 @@ export interface CoreServices {
 }
 export interface Services extends CoreServices {
     queues: Queues;
+    pubsub: Pubsub;
 }
