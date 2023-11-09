@@ -1,0 +1,73 @@
+name: Manual Build and Deploy
+
+on:
+    workflow_call:
+        inputs:
+            ENVIRONMENT:
+                description: 'Environment to deploy to'
+                required: true
+                default: 'dev'
+                type: string
+
+    workflow_dispatch:
+        inputs:
+            ENVIRONMENT:
+                description: 'Environment to deploy to'
+                required: true
+                default: 'dev'
+                type: choice
+                options:
+                    - dev
+                    - prod
+
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        if: ${{ github.event.pull_request.draft == false }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                  aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+                  aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+                  aws-region: us-east-1
+
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v1
+
+            - name: Build, tag, and push the image to Amazon ECR
+              id: build-image
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+                  IMAGE_TAG: ${{ github.sha }}
+                  TAG: ${{ inputs.ENVIRONMENT  == 'prod' && 'latest' || 'dev' }}
+              run: |
+                  # Build a docker container and push it to ECR 
+                  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:$TAG .
+                  echo "Pushing image to ECR..."
+                  docker push -a $ECR_REGISTRY/$ECR_REPOSITORY 
+                  echo "name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$TAG" >> $GITHUB_OUTPUT
+
+            - name: SSH into EC2 instance
+              uses: appleboy/ssh-action@master
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+                  DEPLOY_FOLDER: ${{ inputs.ENVIRONMENT  == 'dev' && 'dev' || 'prod' }}
+              with:
+                  host: 174.129.134.13
+                  username: ${{ secrets.SSH_USERNAME }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  envs: DEPLOY_FOLDER
+                  script: |
+                      cd "workspace/${DEPLOY_FOLDER}"
+                      aws ecr get-login-password --region ${{secrets.ECR_REGION}} | docker login --username AWS --password-stdin ${{ secrets.ECR_ACCOUNT_ID }}.dkr.ecr.${{secrets.ECR_REGION}}.amazonaws.com
+                      docker compose pull
+                      docker compose down
+                      docker compose up -d
