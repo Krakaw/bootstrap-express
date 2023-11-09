@@ -1,5 +1,4 @@
 import Expire, { ExpireOptions } from '@krakaw/expire';
-import fetch from 'node-fetch';
 
 import logger from './logger';
 

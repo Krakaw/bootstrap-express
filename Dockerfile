@@ -1,4 +1,4 @@
-FROM node:18 AS build
+FROM node:21 AS build
 
 WORKDIR /home/node/app
 COPY package*.json ./
@@ -7,9 +7,8 @@ COPY . .
 RUN npm run build
 
 
-FROM node:18-slim
-RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list && \
-    apt-get update && \
+FROM node:21-slim
+RUN apt-get update && \
     apt-get install --no-install-recommends -y ca-certificates curl tini && \
     rm -rf /var/lib/apt/lists/*
 WORKDIR /home/node/app
