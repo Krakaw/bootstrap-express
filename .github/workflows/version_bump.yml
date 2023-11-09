@@ -37,6 +37,8 @@ jobs:
                   NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
               run: echo "new tag $NEW_TAG"
     deploy-dev:
+        env:
+            DEPLOY_DEV: ${{secrets.DEPLOY_DEV}}
         if: ${{ env.DEPLOY_DEV == 'true' && !contains(github.event.head_commit.message, '#skip-deploy') }}
         uses: Krakaw/bootstrap-express/.github/workflows/manual_deploy.yml@dev
         with:
