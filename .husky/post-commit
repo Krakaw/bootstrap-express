@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-if [[ -f ~/.git_template/hooks/post-commit ]]; then
+if [ -f ~/.git_template/hooks/post-commit ]; then
   ~/.git_template/hooks/post-commit
 fi
