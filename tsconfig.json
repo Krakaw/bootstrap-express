@@ -1,31 +1,29 @@
 {
-	"compilerOptions": {
-		"emitDecoratorMetadata": true,
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-		"allowJs": true, /* Allows javascript files to be part of our code */
-		"esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility */
-		"baseUrl": "./src", /* Specifies the base directory to resolve non-relative module names */
-		"module": "commonjs", /* Specifies which module code is generated */
-		"target": "ES2022", /* Sets the javascript version of the emitted typescript */
-		"lib": [
-			"ES2022"
-		], /* Specify a set of bundled library declaration files that describe the target runtime environment */
-		"outDir": "build", /* Specifies the folder for the emitted code */
-		"strict": true, /* Enables all the strict type-checking options */
-		"noImplicitAny": false, /* Enables errors with expressions using 'any' */
-		"resolveJsonModule": true, /* Enables importing json files */
-		"moduleResolution": "node", /* Specifies how typescript looks up a file for a given module */
-		"forceConsistentCasingInFileNames": true, /* Ensure that casing is okay in imports */
-		"typeRoots": [
-			"@types",
-			"node_modules/@types"
-		] /* Specify a set of folders that contain type definitions */
-	},
-	"compileOnSave": true, /* Enables compile on save for this project */
-	"include": [ /* Specifies the files which will be compiled */
-		"src/**/*"
-	],
-	"exclude": [ /* Speficies the files which will be excluded from the build */
-		"node_modules"
-	]
+        "allowJs": true /* Allows javascript files to be part of our code */,
+        "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility */,
+        "module": "commonjs" /* Specifies which module code is generated */,
+        "target": "ES2022" /* Sets the javascript version of the emitted typescript */,
+        "lib": [
+            "ES2022"
+        ] /* Specify a set of bundled library declaration files that describe the target runtime environment */,
+        "outDir": "build" /* Specifies the folder for the emitted code */,
+        "strict": true /* Enables all the strict type-checking options */,
+        "noImplicitAny": false /* Enables errors with expressions using 'any' */,
+        "resolveJsonModule": true /* Enables importing json files */,
+        "moduleResolution": "node" /* Specifies how typescript looks up a file for a given module */,
+        "forceConsistentCasingInFileNames": true /* Ensure that casing is okay in imports */,
+        "typeRoots": [
+            "@types",
+            "node_modules/@types"
+        ] /* Specify a set of folders that contain type definitions */
+    },
+    "compileOnSave": true /* Enables compile on save for this project */,
+    "include": [/* Specifies the files which will be compiled */ "src/**/*"],
+    "exclude": [
+        /* Speficies the files which will be excluded from the build */
+        "node_modules"
+    ]
 }
