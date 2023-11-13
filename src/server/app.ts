@@ -9,7 +9,7 @@ import appRouter from './routes';
 
 export default function initApp(services: Services): Express {
     const app = express();
-
+    app.set('trust proxy', true);
     app.use(cookieParser());
     app.disable('x-powered-by');
     app.use(express.json());
