@@ -1,10 +1,6 @@
 import { Column, Entity } from 'typeorm';
 
-import {
-    CCustomCronMetadata,
-    CustomCronMetadata,
-    CustomCronType
-} from '../types/customCron';
+import { CustomCronMetadata, CustomCronType } from '../types/customCron';
 import BaseEntity from './extends/baseEntity';
 
 @Entity({ name: 'custom_crons' })

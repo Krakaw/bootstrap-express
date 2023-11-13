@@ -8,7 +8,7 @@ import config from '../utils/config';
 import Kill from '../utils/kill';
 import logger, { Logger } from '../utils/logger';
 import RabbitConnection from './rabbit';
-import redisInit, { Redis } from './redis';
+import { Redis } from './redis';
 
 function createQueue<DataType>(
     NewQueue: IQueueConstructor<DataType>,

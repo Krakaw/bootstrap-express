@@ -6,7 +6,8 @@ export interface ProcessJobData {
 }
 
 export default class ProcessQueue extends Queue<ProcessJobData> {
-    process(job: JobData<ProcessJobData>): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    process(_job: JobData<ProcessJobData>): Promise<boolean> {
         return Promise.resolve(false);
     }
 }

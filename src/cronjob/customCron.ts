@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
-import CustomCron from 'db/customCron';
 
+import CustomCron from '../db/customCron';
 import { Services } from '../types/services';
 
 export default async function initCustomCron(
