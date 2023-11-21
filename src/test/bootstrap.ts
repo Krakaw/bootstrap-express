@@ -16,6 +16,7 @@ export const mochaHooks = {
     beforeAll: [
         async function (): Promise<void> {
             config.app.isTest = true;
+            config.auth.adminToken = 'secret';
             mochaServices.services = await initServices();
             mochaServices.app = await initApp(mochaServices.services);
             mochaServices.server = mochaServices.app.listen((err: unknown) => {

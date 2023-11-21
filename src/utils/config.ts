@@ -52,6 +52,10 @@ export default {
         name: env.NAME || 'server',
         isTest: parseBoolean(env.IS_TEST || false)
     },
+    auth: {
+        adminToken: env.AUTH_ADMIN_TOKEN,
+        adminTokenHeader: env.AUTH_ADMIN_TOKEN_HEADER || 'x-admin-token'
+    },
     db: {
         username: env.POSTGRES_USER,
         password: env.POSTGRES_PASSWORD,
