@@ -18,7 +18,7 @@ export const mochaHooks = {
             config.app.isTest = true;
             config.auth.adminToken = 'secret';
             mochaServices.services = await initServices();
-            mochaServices.app = await initApp(mochaServices.services);
+            mochaServices.app = initApp(mochaServices.services);
             mochaServices.server = mochaServices.app.listen((err: unknown) => {
                 if (err) throw err;
             });

@@ -1,17 +1,15 @@
 import { expect } from 'chai';
-import express from 'express';
 import request from 'supertest';
 
-import router from '../../../server/routes/guarded/index';
+import { mochaServices } from '../../bootstrap';
 
 describe('Guarded Echo Endpoint', () => {
-    const app = express();
-    app.use(router);
-
     it('should return the echoed message when x-admin-token is present', async () => {
+        const { app } = mochaServices;
+
         const message = 'Hello, world!';
         const response = await request(app)
-            .get(`/echo/${message}`)
+            .get(`/admin/echo/${message}`)
             .use((req) => {
                 req.set('x-admin-token', 'secret');
             });
@@ -21,16 +19,20 @@ describe('Guarded Echo Endpoint', () => {
     });
 
     it('should return a 401 when the x-admin-token is omitted', async () => {
+        const { app } = mochaServices;
+
         const message = 'Hello, world!';
-        const response = await request(app).get(`/echo/${message}`);
+        const response = await request(app).get(`/admin/echo/${message}`);
 
         expect(response.status).to.be.equal(401);
     });
 
     it('should return a 401 when the x-admin-token is incorrect', async () => {
+        const { app } = mochaServices;
+
         const message = 'Hello, world!';
         const response = await request(app)
-            .get(`/echo/${message}`)
+            .get(`/admin/echo/${message}`)
             .use((req) => {
                 req.set('x-admin-token', 'wrong-secret');
             });
