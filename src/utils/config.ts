@@ -98,6 +98,12 @@ export default {
     redis: getRedisConfigFromEnv(env as never, ''),
     server: {
         host: env.HOST || '0.0.0.0',
-        port: parseInt(env.PORT || '3000', 10)
+        port: parseInt(env.PORT || '3000', 10),
+        jwt: {
+            accessTokenSecret: env.JWT_ACCESS_TOKEN_SECRET || 'secret',
+            accessTokenExpiresIn: env.JWT_ACCESS_TOKEN_EXPIRES_IN || '15m',
+            refreshTokenSecret: env.JWT_REFRESH_TOKEN_SECRET || 'secret',
+            refreshTokenExpiresIn: env.JWT_REFRESH_TOKEN_EXPIRES_IN || '30d'
+        }
     }
 };

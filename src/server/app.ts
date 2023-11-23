@@ -36,7 +36,7 @@ export default function initApp(services: Services): Express {
             });
         } else {
             logger.error(err, 'Catch-All Error');
-            res.status(500).send('Something broke!');
+            res.status(500).json({ message: 'Something broke!' });
         }
     });
     return app;

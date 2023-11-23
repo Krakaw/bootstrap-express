@@ -3,7 +3,7 @@ import request from 'supertest';
 
 import { mochaServices } from '../../bootstrap';
 
-describe('Guarded Echo Endpoint', () => {
+describe('Admin Echo Endpoint', () => {
     it('should return the echoed message when x-admin-token is present', async () => {
         const { app } = mochaServices;
 
