@@ -17,6 +17,7 @@ export const mochaHooks = {
         async function (): Promise<void> {
             config.app.isTest = true;
             config.auth.adminToken = 'secret';
+            config.server.jwt.refreshTokenSecret = 'refreshSecret';
             mochaServices.services = await initServices();
             mochaServices.app = initApp(mochaServices.services);
             mochaServices.server = mochaServices.app.listen((err: unknown) => {
