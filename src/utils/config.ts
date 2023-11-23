@@ -69,7 +69,7 @@ export default {
     },
     queue: {
         // Rabbit queue url
-        rabbitUrl: env.RABBITMQ_URL ?? 'amqp://localhost:5672',
+        rabbitUrl: env.RABBITMQ_URL ?? '',
         // Rabbit Queue Name
         queueName: env.RABBITMQ_QUEUE_NAME || 'process-queue',
         // Rabbit Exchange Details
