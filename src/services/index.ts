@@ -2,33 +2,33 @@
 import initDb, { initTestDb } from '../db';
 import { Pubsub } from '../pubsub';
 import Queue, { IQueueConstructor } from '../queue';
-import ProcessQueue from '../queue/process';
+import DefaultQueueExample from '../queue/defaultQueueExample';
 import { CoreServices, Queues, Services } from '../types/services';
 import config from '../utils/config';
 import Kill from '../utils/kill';
 import logger, { Logger } from '../utils/logger';
-import RabbitConnection from './rabbit';
+import PgBossConnection from './pg-boss';
 import { Redis } from './redis';
 
 function createQueue<DataType>(
     NewQueue: IQueueConstructor<DataType>,
     logger: Logger,
-    name: string,
+    queueName: string,
     onComplete?: () => void
 ): Queue<DataType> {
     return new NewQueue({
-        name,
+        queueName,
         onComplete:
             onComplete ||
             (() => {
-                logger.info(`Queue ${name} completed`);
+                logger.info(`Queue ${queueName} completed`);
             })
     });
 }
 function initQueues(services: CoreServices): Queues {
     const { logger } = services;
     return {
-        processQueue: createQueue(ProcessQueue, logger, 'Process Queue')
+        processQueue: createQueue(DefaultQueueExample, logger, 'Process Queue')
     };
 }
 
@@ -36,17 +36,15 @@ async function cleanup({
     kill,
     logger,
     dataSource,
-    rabbit,
+    pgBoss,
     redis,
     pubsub
 }: Services) {
     kill.on('kill', async () => {
         logger.debug('Stopping database');
         await dataSource.destroy();
-        // TODO: Add some logic to kill to wait for all queues to finish
-        // TODO: This should a depends_on based queue system, but out of scope for now
         logger.debug('Stopping rabbit');
-        await rabbit.disconnect();
+        await pgBoss.disconnect();
         logger.debug('Stopping redis');
         await redis.disconnect();
         logger.debug('Stopping pubsub');
@@ -64,15 +62,6 @@ export default async function initServices(): Promise<Services> {
     }
     logger.debug('Database Initialized');
 
-    logger.debug('Initializing RabbitMQ...');
-    const rabbit = new RabbitConnection(logger);
-    if (config.queue.rabbitUrl) {
-        await rabbit.connect();
-        logger.debug('RabbitMQ Initialized');
-    } else {
-        logger.debug('RabbitMQ initialization skipped');
-    }
-
     logger.debug('Initializing Redis...');
     const redis = new Redis(config.redis, logger);
     logger.debug('Redis Initialized');
@@ -84,7 +73,6 @@ export default async function initServices(): Promise<Services> {
     const coreServices: CoreServices = {
         dataSource,
         redis,
-        rabbit,
         logger,
         kill
     };
@@ -93,10 +81,16 @@ export default async function initServices(): Promise<Services> {
 
     const queues = initQueues(coreServices);
     dataSource.insertQueues(queues);
+
+    logger.debug('Initializing PgBoss...');
+    const pgBoss = new PgBossConnection(coreServices);
+    logger.debug('Initialized PgBoss...');
+
     const services: Services = {
         ...coreServices,
         queues,
-        pubsub
+        pubsub,
+        pgBoss
     };
 
     // eslint-disable-next-line no-restricted-syntax
