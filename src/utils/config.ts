@@ -67,34 +67,6 @@ export default {
         level: env.LOG_LEVEL || 'debug',
         target: env.LOG_TARGET || 'pino/file'
     },
-    queue: {
-        // Rabbit queue url
-        rabbitUrl: env.RABBITMQ_URL ?? '',
-        // Rabbit Queue Name
-        queueName: env.RABBITMQ_QUEUE_NAME || 'process-queue',
-        // Rabbit Exchange Details
-        exchange: {
-            // Rabbit Exchange Name
-            name: env.RABBITMQ_EXCHANGE_NAME || 'process-exchange',
-            // Rabbit Exchange Type
-            type: env.RABBITMQ_EXCHANGE_TYPE || 'fanout',
-            // Rabbit Exchange Options
-            options: {
-                // Rabbit Exchange Durable
-                durable: parseBoolean(env.RABBITMQ_EXCHANGE_DURABLE || true),
-                // Rabbit Exchange Auto Delete
-                autoDelete: parseBoolean(
-                    env.RABBITMQ_EXCHANGE_AUTO_DELETE || false
-                )
-            }
-        },
-        // The max jobs to pull per worker
-        maxRunningJobs: parseInt(env.RABBITMQ_MAX_RUNNING_JOBS || '1', 10),
-        // Maximum number of retries for a job
-        workerRetryMax: parseInt(env.RABBITMQ_WORKER_RETRY_MAX || '1', 10),
-        // Retry strategy
-        workerRetryStrategy: env.RABBITMQ_WORKER_RETRY_STRATEGY || 'exponential'
-    },
     redis: getRedisConfigFromEnv(env as never, ''),
     server: {
         host: env.HOST || '0.0.0.0',

@@ -1,20 +1,6 @@
-import { Options } from 'amqplib';
-
-import PgBossQueue, { PgBossQueueProps } from '../services/pg-boss/queue';
-import RabbitQueue, {
-    JobData,
-    ProcessJob,
-    RabbitExchange
-} from '../services/rabbit/queue';
+import PgBossQueue from '../services/pg-boss/queue';
+import { JobData, ProcessJob } from '../types/queue';
 import { Services } from '../types/services';
-import config from '../utils/config';
-
-import AssertQueue = Options.AssertQueue;
-
-export interface QueueParams {
-    queueName: string;
-    onComplete: () => void;
-}
 
 export interface QueueProcessor<DataType> {
     processJob: ProcessJob<DataType>;
@@ -29,23 +15,24 @@ export default abstract class Queue<DataType>
 
     private queueName!: string;
 
-    constructor(services: Services) {
-        this.services = services;
-    }
-
-    async init(
-        queueProps: PgBossQueueProps & QueueParams,
-        services: Services
-    ): Promise<void> {
-        const { queueName } = queueProps;
+    constructor(queueName: string) {
         this.queueName = queueName;
-        this.pgBossQueue = new PgBossQueue<DataType>(queueProps, services);
-        if (config.queue.rabbitUrl) {
-            await this.pgBossQueue.initQueue();
-        }
     }
 
-    async addJob(data: DataType, id: string, priority = 0): Promise<boolean> {
+    async init(services: Services): Promise<void> {
+        this.services = services;
+        this.pgBossQueue = new PgBossQueue<DataType>(
+            { connection: services.pgBoss, queueName: this.queueName },
+            services
+        );
+        await this.pgBossQueue.initQueue();
+    }
+
+    async addJob(
+        data: DataType,
+        id: string,
+        priority = 0
+    ): Promise<string | null> {
         return this.pgBossQueue.addJob(
             {
                 id,

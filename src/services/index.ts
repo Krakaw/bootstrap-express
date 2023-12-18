@@ -6,29 +6,24 @@ import DefaultQueueExample from '../queue/defaultQueueExample';
 import { CoreServices, Queues, Services } from '../types/services';
 import config from '../utils/config';
 import Kill from '../utils/kill';
-import logger, { Logger } from '../utils/logger';
+import logger from '../utils/logger';
 import PgBossConnection from './pg-boss';
 import { Redis } from './redis';
 
 function createQueue<DataType>(
     NewQueue: IQueueConstructor<DataType>,
-    logger: Logger,
-    queueName: string,
-    onComplete?: () => void
+    queueName: string
 ): Queue<DataType> {
-    return new NewQueue({
-        queueName,
-        onComplete:
-            onComplete ||
-            (() => {
-                logger.info(`Queue ${queueName} completed`);
-            })
-    });
+    return new NewQueue(queueName);
 }
-function initQueues(services: CoreServices): Queues {
-    const { logger } = services;
+
+function initQueues(): Queues {
     return {
-        processQueue: createQueue(DefaultQueueExample, logger, 'Process Queue')
+        // Add your queues here
+        defaultQueueExample: createQueue(
+            DefaultQueueExample,
+            'Default Queue Example'
+        )
     };
 }
 
@@ -79,13 +74,11 @@ export default async function initServices(): Promise<Services> {
 
     const pubsub = new Pubsub(redis.duplicate());
 
-    const queues = initQueues(coreServices);
-    dataSource.insertQueues(queues);
-
     logger.debug('Initializing PgBoss...');
     const pgBoss = new PgBossConnection(coreServices);
     logger.debug('Initialized PgBoss...');
-
+    const queues = initQueues();
+    dataSource.insertQueues(queues);
     const services: Services = {
         ...coreServices,
         queues,
@@ -93,12 +86,14 @@ export default async function initServices(): Promise<Services> {
         pgBoss
     };
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (const key of Object.keys(queues)) {
-        logger.debug(`Initializing Queue ${key}...`);
-        // eslint-disable-next-line no-await-in-loop
-        await queues[key as keyof Queues]?.init(services);
-        logger.debug(`Queue ${key} Initialized`);
+    if (!config.app.isTest) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const key of Object.keys(queues)) {
+            logger.debug(`Initializing Queue ${key}...`);
+            // eslint-disable-next-line no-await-in-loop
+            await queues[key as keyof Queues]?.init(services);
+            logger.debug(`Queue ${key} Initialized`);
+        }
     }
 
     logger.debug('Create cleanup steps');

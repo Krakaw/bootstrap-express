@@ -59,15 +59,14 @@ export default class PgBossQueue<DataType> {
         priority?: number,
         retryLimit?: number,
         singletonKey?: string
-    ): Promise<boolean> {
+    ): Promise<string | null> {
         const jobId = await this.pgBoss.send(this.queueName, data, {
-            // TODO: Change addJob to use SendOptions directly
             priority,
             retryLimit,
             singletonKey
         });
         this.logger.debug(`Added job ${jobId} to ${this.queueName} queue`);
-        return true;
+        return jobId;
     }
 
     async process(processJob: ProcessJob<DataType>): Promise<void> {

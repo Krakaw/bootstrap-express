@@ -1,4 +1,4 @@
-import { JobData } from '../services/rabbit/queue';
+import { JobData } from '../types/queue';
 import Queue from './index';
 
 export interface ProcessJobData {
@@ -7,7 +7,7 @@ export interface ProcessJobData {
 
 export default class DefaultQueueExample extends Queue<ProcessJobData> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    process(_job: JobData<ProcessJobData>): Promise<boolean> {
-        return Promise.resolve(false);
+    async process(_job: JobData<ProcessJobData>): Promise<boolean> {
+        return true;
     }
 }
