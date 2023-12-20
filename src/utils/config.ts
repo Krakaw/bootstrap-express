@@ -112,6 +112,9 @@ export default {
             accessTokenExpiresIn: env.JWT_ACCESS_TOKEN_EXPIRES_IN || '15m',
             refreshTokenSecret: env.JWT_REFRESH_TOKEN_SECRET || 'secret',
             refreshTokenExpiresIn: env.JWT_REFRESH_TOKEN_EXPIRES_IN || '30d'
+        },
+        session: {
+            secret: env.SESSION_SECRET || 'secret'
         }
     }
 };
