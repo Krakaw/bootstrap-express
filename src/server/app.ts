@@ -24,7 +24,7 @@ export default function initApp(services: Services): Express {
     app.get('/status', (req: Request, res: Response) => {
         res.send(version);
     });
-    app.use('/', appRouter);
+    app.use('/', appRouter(services));
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     app.use((err, req, res, _next) => {
         const { message } = err;

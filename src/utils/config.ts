@@ -50,11 +50,19 @@ const env = { ...process.env };
 export default {
     app: {
         name: env.NAME || 'server',
+        environment: env.NODE_ENV || 'development',
         isTest: parseBoolean(env.IS_TEST || false)
     },
     auth: {
         adminToken: env.AUTH_ADMIN_TOKEN,
-        adminTokenHeader: env.AUTH_ADMIN_TOKEN_HEADER || 'x-admin-token'
+        adminTokenHeader: env.AUTH_ADMIN_TOKEN_HEADER || 'x-admin-token',
+        twitter: {
+            consumerKey: env.TWITTER_CONSUMER_KEY,
+            consumerSecret: env.TWITTER_CONSUMER_SECRET,
+            callbackURL: env.TWITTER_CALLBACK_URL,
+            successURL: env.TWITTER_SUCCESS_URL || '/',
+            failureURL: env.TWITTER_FAILURE_URL || '/'
+        }
     },
     db: {
         username: env.POSTGRES_USER,

@@ -1,12 +1,13 @@
 import { PrimaryId } from './id';
+import { UserRoles } from './user';
 
 export enum JwtScope {
-    ACCESS = 'access',
-    REFRESH = 'refresh'
+    Access = 'access',
+    Refresh = 'refresh'
 }
 export interface JwtAccessToken {
     id: PrimaryId;
-    role?: string;
+    role?: UserRoles;
     scope: JwtScope;
 }
 

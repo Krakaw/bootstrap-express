@@ -8,6 +8,11 @@ declare global {
         interface Request {
             services: Services;
             jwt: JwtAccessToken;
+            login: (
+                user: unknown,
+                options?: unknown,
+                done?: (error: unknown) => void
+            ) => void;
         }
     }
 }
