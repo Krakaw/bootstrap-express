@@ -7,7 +7,7 @@ export enum Command {
 }
 
 export enum CommandQueue {
-    Processor = 'processor'
+    Example = 'example'
 }
 
 const { argv } = yargs(process.argv.slice(2))
@@ -18,7 +18,7 @@ const { argv } = yargs(process.argv.slice(2))
             alias: 'n',
             description: 'Queue name to start',
             demandOption: true,
-            enum: [CommandQueue.Processor]
+            enum: [CommandQueue.Example]
         }
     })
     .demandCommand(1, 1, 'Choose a command from the list above')

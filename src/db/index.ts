@@ -25,7 +25,7 @@ const options: DataSourceOptions = {
     password: config.db.password,
     database: config.db.database,
     synchronize: false,
-    logging: false,
+    logging: true,
     entities: [Model],
     subscribers: [],
     migrations: [],

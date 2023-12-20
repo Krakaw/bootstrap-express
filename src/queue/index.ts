@@ -44,7 +44,6 @@ export default abstract class Queue<DataType>
 
     async startQueue(): Promise<void> {
         this.services.logger.debug(`⚡️ Starting ${this.queueName} processor`);
-        // TODO: Add tracer
         await this.pgBossQueue.process(this.processJob.bind(this));
     }
 

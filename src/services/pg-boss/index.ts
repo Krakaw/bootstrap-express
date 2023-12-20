@@ -14,18 +14,23 @@ export default class PgBossConnection {
         this.coreServices = coreServices;
         const { dataSource, logger } = this.coreServices;
         this.logger = logger;
-        const db = {
-            executeSql: async (sql: string, params: any[]) => {
-                const queryResult = await dataSource.query(sql, params);
-                return {
-                    rows: queryResult,
-                    rowCount: queryResult.length
-                };
-            }
-        } as Db;
-        this.connection = new PgBoss({
-            db
-        });
+        // const db = {
+        //     onComplete: false,
+        //     executeSql: async (sql: string, params: any[]) => {
+        //         const queryResult = await dataSource.query(sql, params);
+        //         return {
+        //             rows: queryResult || [],
+        //             rowCount: queryResult?.length || 0
+        //         };
+        //     }
+        // } as Db;
+        // this.connection = new PgBoss({
+        //     db
+        // });
+        //
+        this.connection = new PgBoss(
+            `postgres://postgres:password@localhost/database`
+        );
     }
 
     async disconnect(): Promise<void> {

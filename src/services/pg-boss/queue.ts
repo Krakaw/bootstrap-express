@@ -42,8 +42,6 @@ export default class PgBossQueue<DataType> {
             process.exit(1);
         };
         this.pgBoss.on('error', errorHandler);
-        await this.pgBoss.start();
-
         this.kill.on('kill', async () => {
             this.logger.info(`Closing PgBoss queue for ${this.queueName}.`);
             try {
@@ -52,6 +50,7 @@ export default class PgBossQueue<DataType> {
                 this.logger.error(err, 'Unable to close PgBoss queue.');
             }
         });
+        await this.pgBoss.start();
     }
 
     async addJob(
@@ -62,7 +61,7 @@ export default class PgBossQueue<DataType> {
     ): Promise<string | null> {
         const jobId = await this.pgBoss.send(this.queueName, data, {
             priority,
-            retryLimit,
+            retryLimit: retryLimit || 0,
             singletonKey
         });
         this.logger.debug(`Added job ${jobId} to ${this.queueName} queue`);
@@ -82,5 +81,6 @@ export default class PgBossQueue<DataType> {
             }
         });
         await this.pgBoss.work(this.queueName, processJob);
+        return new Promise((r) => {});
     }
 }
