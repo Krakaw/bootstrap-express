@@ -2,6 +2,7 @@ import { DataType, newDb } from 'pg-mem';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
+// import initPgBoss from '../test/db/initPgBoss';
 import { Queues } from '../types/services';
 import config from '../utils/config';
 import { generateUuid } from '../utils/uuid';
@@ -24,7 +25,7 @@ const options: DataSourceOptions = {
     password: config.db.password,
     database: config.db.database,
     synchronize: false,
-    logging: false,
+    logging: true,
     entities: [Model],
     subscribers: [],
     migrations: [],
@@ -56,6 +57,8 @@ export async function initTestDb(): Promise<DataSourceWithRepositories> {
         impure: true
     });
 
+    // Re-enable for pg-boss testing
+    // initPgBoss(iMemoryDb);
     const typeormDataSource = iMemoryDb.adapters.createTypeormDataSource({
         ...options
         // logging: true
@@ -67,6 +70,7 @@ export async function initTestDb(): Promise<DataSourceWithRepositories> {
             }
         });
     };
+
     await typeormDataSource.initialize();
     await typeormDataSource.synchronize();
     return typeormDataSource;
