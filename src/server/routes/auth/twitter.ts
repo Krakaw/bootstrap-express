@@ -1,4 +1,5 @@
 import express, { Router } from 'express';
+import expressSession from 'express-session';
 import passport from 'passport';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
 
@@ -16,6 +17,15 @@ export default (services: Services): Router => {
     if (!config.auth.twitter.consumerKey) {
         return router;
     }
+    router.use(
+        expressSession({
+            secret: config.server.session.secret,
+            resave: false,
+            saveUninitialized: false
+        })
+    );
+    router.use(passport.session());
+
     passport.use(
         new TwitterStrategy(
             {
