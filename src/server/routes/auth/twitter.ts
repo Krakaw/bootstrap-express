@@ -13,7 +13,9 @@ import { generateJwtTokens } from '../../auth/jwt';
 
 export default (services: Services): Router => {
     const router = express.Router();
-
+    if (!config.auth.twitter.consumerKey) {
+        return router;
+    }
     passport.use(
         new TwitterStrategy(
             {
