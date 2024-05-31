@@ -1,8 +1,8 @@
 import amqplib, { Channel, Connection, ConsumeMessage, Options } from 'amqplib';
-import { Logger } from 'pino';
 
 import config from '../../utils/config';
 import Kill from '../../utils/kill';
+import { Logger } from '../../utils/logger';
 
 import AssertQueue = Options.AssertQueue;
 
@@ -184,7 +184,12 @@ export default class RabbitQueue<DataType> {
                     this.channel.ack(msg);
                 } catch (e) {
                     const retryCount =
-                        +msg.properties.headers['x-retry-count'] + 1;
+                        parseInt(
+                            msg?.properties?.headers
+                                ? msg?.properties?.headers['x-retry-count']
+                                : '0',
+                            10
+                        ) + 1;
                     this.channel.reject(msg, false);
                     if (retryCount < config.queue.workerRetryMax) {
                         this.addJob(data, msg.properties.priority, retryCount);
