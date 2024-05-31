@@ -1,4 +1,4 @@
-import PgBoss from 'pg-boss';
+import PgBoss, { Db } from 'pg-boss';
 
 import { CoreServices } from '../../types/services';
 import { Logger } from '../../utils/logger';
@@ -12,25 +12,21 @@ export default class PgBossConnection {
 
     constructor(coreServices: CoreServices) {
         this.coreServices = coreServices;
-        const { logger } = this.coreServices;
+        const { logger, dataSource } = this.coreServices;
         this.logger = logger;
-        // const db = {
-        //     onComplete: false,
-        //     executeSql: async (sql: string, params: any[]) => {
-        //         const queryResult = await dataSource.query(sql, params);
-        //         return {
-        //             rows: queryResult || [],
-        //             rowCount: queryResult?.length || 0
-        //         };
-        //     }
-        // } as Db;
-        // this.connection = new PgBoss({
-        //     db
-        // });
-        //
-        this.connection = new PgBoss(
-            `postgres://postgres:password@localhost/database`
-        );
+        const db = {
+            onComplete: false,
+            executeSql: async (sql: string, params: any[]) => {
+                const queryResult = await dataSource.query(sql, params);
+                return {
+                    rows: queryResult || [],
+                    rowCount: queryResult?.length || 0
+                };
+            }
+        } as unknown as Db;
+        this.connection = new PgBoss({
+            db
+        });
     }
 
     async disconnect(): Promise<void> {

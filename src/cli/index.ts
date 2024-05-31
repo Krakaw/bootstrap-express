@@ -21,7 +21,7 @@ export default async function init(argv: Arguments): Promise<void> {
                 const { name } = argv;
                 switch (name) {
                     case CommandQueue.Example:
-                        await services.queues.defaultQueueExample.startQueue();
+                        await services.queues.defaultQueueExample.process();
                         break;
                     default:
                         logger.error(`Unknown queue: ${name}`);

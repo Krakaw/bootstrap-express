@@ -2,7 +2,7 @@ import { DataType, newDb } from 'pg-mem';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-// import initPgBoss from '../test/db/initPgBoss';
+import initPgBoss from '../test/db/initPgBoss';
 import { Queues } from '../types/services';
 import config from '../utils/config';
 import { generateUuid } from '../utils/uuid';
@@ -65,7 +65,8 @@ export async function initTestDb(): Promise<DataSourceWithRepositories> {
     });
 
     // Re-enable for pg-boss testing
-    // initPgBoss(iMemoryDb);
+    initPgBoss(iMemoryDb);
+
     const typeormDataSource = iMemoryDb.adapters.createTypeormDataSource({
         ...options
         // logging: true

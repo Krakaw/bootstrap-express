@@ -1,14 +1,13 @@
+import PgBossQueue from '../services/pg-boss/queue';
 import { JobData } from '../types/queue';
-import Queue from './index';
 
 export interface ProcessJobData {
-    data: string;
+    value: string;
 }
 
-export default class DefaultQueueExample extends Queue<ProcessJobData> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async process(_job: JobData<ProcessJobData>): Promise<boolean> {
-        console.log('Processing job', _job);
+export default class DefaultQueueExample extends PgBossQueue<ProcessJobData> {
+    async worker(_job: JobData<ProcessJobData>): Promise<boolean> {
+        this.logger.info('Processing job', _job);
         return true;
     }
 }
