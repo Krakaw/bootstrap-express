@@ -57,7 +57,11 @@ export async function initTestDb(): Promise<DataSourceWithRepositories> {
         implementation: generateUuid,
         impure: true
     });
-
+    iMemoryDb.public.registerFunction({
+        name: 'obj_description',
+        args: [DataType.text, DataType.text],
+        implementation: () => 'Comment'
+    });
     const typeormDataSource = iMemoryDb.adapters.createTypeormDataSource({
         ...options
         // logging: true
