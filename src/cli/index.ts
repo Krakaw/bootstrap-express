@@ -2,7 +2,6 @@ import { Arguments } from 'yargs';
 
 import { version } from '../../package.json';
 import initCron from '../cronjob';
-import startProcessor from '../processor';
 import startServer from '../server';
 import initServices from '../services';
 import logger from '../utils/logger';

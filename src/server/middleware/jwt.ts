@@ -36,7 +36,7 @@ export function authenticateJwt(
 ): void {
     try {
         const token = extractJwtFromReq(req) || '';
-        req.jwt = authenticateJwtUser(JwtScope.ACCESS, token);
+        req.jwt = authenticateJwtUser(JwtScope.Access, token);
         const { jwt } = req;
         const { id } = jwt;
         if (!id) {

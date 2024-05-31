@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser';
 import express, { Express, Request, Response } from 'express';
 import 'express-async-errors';
+import path from 'path';
 
 import { version } from '../../package.json';
 import { Services } from '../types/services';
@@ -12,6 +13,7 @@ export default function initApp(services: Services): Express {
     app.set('trust proxy', true);
     app.use(cookieParser());
     app.disable('x-powered-by');
+    app.use(express.static(path.join(__dirname, '../../public')));
     app.use(express.json());
     app.use((req: Request, res, next) => {
         // Inject services into the request object
@@ -22,7 +24,7 @@ export default function initApp(services: Services): Express {
     app.get('/status', (req: Request, res: Response) => {
         res.send(version);
     });
-    app.use('/', appRouter);
+    app.use('/', appRouter(services));
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     app.use((err, req, res, _next) => {
         const { message } = err;

@@ -6,9 +6,9 @@ import config from '../../utils/config';
 // Generate accessToken and refreshToken
 export function generateJwtTokens(
     jwtData: JwtAccessToken,
-    customExpiresIn?: number
+    salt = ''
 ): {
-    accessToken: string;
+    token: string;
     refreshToken: string;
 } {
     const {
@@ -18,39 +18,42 @@ export function generateJwtTokens(
         refreshTokenExpiresIn
     } = config.server.jwt;
 
-    const accessToken = jwt.sign(jwtData, accessTokenSecret, {
-        expiresIn: customExpiresIn || accessTokenExpiresIn
+    const token = jwt.sign(jwtData, accessTokenSecret + salt, {
+        expiresIn: accessTokenExpiresIn
     });
     const refreshToken = jwt.sign(
         { id: jwtData.id, scope: 'refresh' },
-        refreshTokenSecret,
+        refreshTokenSecret + salt,
         {
-            expiresIn: customExpiresIn || refreshTokenExpiresIn
+            expiresIn: refreshTokenExpiresIn
         }
     );
     return {
-        accessToken,
+        token,
         refreshToken
     };
 }
 
 export function authenticateJwtUser(
-    jwtScope: JwtScope.ACCESS,
-    token: string
+    jwtScope: JwtScope.Access,
+    token: string,
+    salt?: string
 ): JwtAccessToken;
 export function authenticateJwtUser(
-    jwtScope: JwtScope.REFRESH,
-    token: string
+    jwtScope: JwtScope.Refresh,
+    token: string,
+    salt?: string
 ): JwtRefreshToken;
 export function authenticateJwtUser(
     jwtScope: JwtScope,
-    token?: string
+    token?: string,
+    salt = ''
 ): JwtAccessToken | JwtRefreshToken {
     if (!token) {
         throw new Error('Unauthorized');
     }
     const { accessTokenSecret, refreshTokenSecret } = config.server.jwt;
     const secret =
-        jwtScope === JwtScope.ACCESS ? accessTokenSecret : refreshTokenSecret;
-    return jwt.verify(token, secret);
+        jwtScope === JwtScope.Access ? accessTokenSecret : refreshTokenSecret;
+    return jwt.verify(token, secret + salt);
 }

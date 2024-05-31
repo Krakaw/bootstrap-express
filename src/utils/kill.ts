@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events';
-import { Logger } from 'pino';
+
+import { Logger } from './logger';
 
 export default class Kill extends EventEmitter {
     count = 0;

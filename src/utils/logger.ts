@@ -2,10 +2,6 @@ import pino from 'pino';
 
 import config from './config';
 
-const customLevels = {
-    invalid: 25
-};
-
 /** Set Up Logging */
 const pinoConfig = {
     name: config.app.name,
@@ -18,10 +14,9 @@ const pinoConfig = {
             customLevels: 'invalid:25',
             useOnlyCustomProps: false
         }
-    },
-    customLevels
+    }
 };
 
 const logger = pino(pinoConfig);
-export type Logger = pino.Logger<typeof pinoConfig>;
-export default logger as Logger;
+export type Logger = pino.Logger;
+export default logger;

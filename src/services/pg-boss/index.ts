@@ -1,4 +1,4 @@
-import PgBoss, { Db } from 'pg-boss';
+import PgBoss from 'pg-boss';
 
 import { CoreServices } from '../../types/services';
 import { Logger } from '../../utils/logger';
@@ -12,7 +12,7 @@ export default class PgBossConnection {
 
     constructor(coreServices: CoreServices) {
         this.coreServices = coreServices;
-        const { dataSource, logger } = this.coreServices;
+        const { logger } = this.coreServices;
         this.logger = logger;
         // const db = {
         //     onComplete: false,

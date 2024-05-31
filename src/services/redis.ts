@@ -1,9 +1,9 @@
 import EventEmitter from 'events';
 import CreateClient from 'ioredis';
 import IoRedisMock from 'ioredis-mock';
-import { Logger } from 'pino';
 
 import systemConfig, { RedisConfig } from '../utils/config';
+import { Logger } from '../utils/logger';
 
 export class Redis extends EventEmitter {
     public readonly client;

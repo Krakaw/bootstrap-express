@@ -6,7 +6,9 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Queues } from '../types/services';
 import config from '../utils/config';
 import { generateUuid } from '../utils/uuid';
-import Model from './models/model';
+import { UserAuthentication1703106749815 } from './migrations/1703106749815-UserAuthentication';
+import Login from './models/login';
+import User from './models/user';
 
 export class DataSourceWithRepositories extends DataSource {
     public insertQueues(queues: Queues): void {
@@ -25,10 +27,10 @@ const options: DataSourceOptions = {
     password: config.db.password,
     database: config.db.database,
     synchronize: false,
-    logging: true,
-    entities: [Model],
+    logging: false,
+    entities: [User, Login],
     subscribers: [],
-    migrations: [],
+    migrations: [UserAuthentication1703106749815],
     namingStrategy: new SnakeNamingStrategy()
 };
 
@@ -55,6 +57,11 @@ export async function initTestDb(): Promise<DataSourceWithRepositories> {
         returns: DataType.uuid,
         implementation: generateUuid,
         impure: true
+    });
+    iMemoryDb.public.registerFunction({
+        name: 'obj_description',
+        args: [DataType.text, DataType.text],
+        implementation: () => 'Comment'
     });
 
     // Re-enable for pg-boss testing

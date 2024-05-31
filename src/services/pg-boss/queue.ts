@@ -81,6 +81,6 @@ export default class PgBossQueue<DataType> {
             }
         });
         await this.pgBoss.work(this.queueName, processJob);
-        return new Promise((r) => {});
+        return new Promise(() => {});
     }
 }
