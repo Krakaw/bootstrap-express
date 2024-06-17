@@ -54,7 +54,7 @@
         "passport-twitter": "^1.0.4",
         "pg": "^8.11.5",
         "pg-mem": "^2.8.1",
-        "pino": "^8.21.0",
+        "pino": "^9.2.0",
         "pino-pretty": "^10.3.1",
         "socket.io": "^4.7.5",
         "ts-mixer": "^6.0.4",
