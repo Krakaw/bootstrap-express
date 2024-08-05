@@ -1,6 +1,7 @@
 import PgBoss, { Db } from 'pg-boss';
 
 import { CoreServices } from '../../types/services';
+import config from '../../utils/config';
 import { Logger } from '../../utils/logger';
 
 export default class PgBossConnection {
