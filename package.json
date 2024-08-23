@@ -53,7 +53,7 @@
         "passport-local": "^1.0.0",
         "passport-twitter": "^1.0.4",
         "pg": "^8.11.5",
-        "pg-mem": "^2.8.1",
+        "pg-mem": "^3.0.2",
         "pino": "^9.3.2",
         "pino-pretty": "^11.2.2",
         "socket.io": "^4.7.5",
