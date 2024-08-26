@@ -52,10 +52,10 @@ importers:
         version: 1.0.4
       pg:
         specifier: ^8.11.5
-        version: 8.11.5
+        version: 8.12.0
       pg-mem:
         specifier: ^3.0.2
-        version: 3.0.2(typeorm@0.3.20(ioredis@5.4.1)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))
+        version: 3.0.2(typeorm@0.3.20(ioredis@5.4.1)(pg@8.12.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))
       pino:
         specifier: ^9.3.2
         version: 9.3.2
@@ -70,10 +70,10 @@ importers:
         version: 6.0.4
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.20(ioredis@5.4.1)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))
+        version: 0.3.20(ioredis@5.4.1)(pg@8.12.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))
       typeorm-naming-strategies:
         specifier: ^4.1.0
-        version: 4.1.0(typeorm@0.3.20(ioredis@5.4.1)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))
+        version: 4.1.0(typeorm@0.3.20(ioredis@5.4.1)(pg@8.12.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -2009,8 +2009,8 @@ packages:
     resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
     engines: {node: '>=4'}
 
-  pg@8.11.5:
-    resolution: {integrity: sha512-jqgNHSKL5cbDjFlHyYsCXmQDrfIX/3RsNwYqpd4N0Kt8niLuNoRNH+aazv6cOd43gPh9Y4DjQCtb+X0MH0Hvnw==}
+  pg@8.12.0:
+    resolution: {integrity: sha512-A+LHUSnwnxrnL/tZ+OLfqR1SxLN3c/pgDztZ47Rpbsd4jUytsTtwQo/TLPRzPJMp/1pbhYVhH9cuSZLAajNfjQ==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       pg-native: '>=3.0.1'
@@ -4730,7 +4730,7 @@ snapshots:
 
   pg-int8@1.0.1: {}
 
-  pg-mem@3.0.2(typeorm@0.3.20(ioredis@5.4.1)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))):
+  pg-mem@3.0.2(typeorm@0.3.20(ioredis@5.4.1)(pg@8.12.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))):
     dependencies:
       functional-red-black-tree: 1.0.1
       immutable: 4.3.6
@@ -4740,11 +4740,11 @@ snapshots:
       object-hash: 2.2.0
       pgsql-ast-parser: 12.0.1
     optionalDependencies:
-      typeorm: 0.3.20(ioredis@5.4.1)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))
+      typeorm: 0.3.20(ioredis@5.4.1)(pg@8.12.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))
 
-  pg-pool@3.6.2(pg@8.11.5):
+  pg-pool@3.6.2(pg@8.12.0):
     dependencies:
-      pg: 8.11.5
+      pg: 8.12.0
 
   pg-protocol@1.6.1: {}
 
@@ -4756,10 +4756,10 @@ snapshots:
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
 
-  pg@8.11.5:
+  pg@8.12.0:
     dependencies:
       pg-connection-string: 2.6.4
-      pg-pool: 3.6.2(pg@8.11.5)
+      pg-pool: 3.6.2(pg@8.12.0)
       pg-protocol: 1.6.1
       pg-types: 2.2.0
       pgpass: 1.0.5
@@ -5335,11 +5335,11 @@ snapshots:
       is-typed-array: 1.1.13
       possible-typed-array-names: 1.0.0
 
-  typeorm-naming-strategies@4.1.0(typeorm@0.3.20(ioredis@5.4.1)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))):
+  typeorm-naming-strategies@4.1.0(typeorm@0.3.20(ioredis@5.4.1)(pg@8.12.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))):
     dependencies:
-      typeorm: 0.3.20(ioredis@5.4.1)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))
+      typeorm: 0.3.20(ioredis@5.4.1)(pg@8.12.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))
 
-  typeorm@0.3.20(ioredis@5.4.1)(pg@8.11.5)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)):
+  typeorm@0.3.20(ioredis@5.4.1)(pg@8.12.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)):
     dependencies:
       '@sqltools/formatter': 1.2.5
       app-root-path: 3.1.0
@@ -5358,7 +5358,7 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       ioredis: 5.4.1
-      pg: 8.11.5
+      pg: 8.12.0
       ts-node: 10.9.2(@types/node@20.14.0)(typescript@5.4.5)
     transitivePeerDependencies:
       - supports-color
