@@ -1,4 +1,4 @@
-FROM node:22 AS build
+FROM node:23 AS build
 
 WORKDIR /home/node/app
 COPY package*.json ./
@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 
-FROM node:22-slim
+FROM node:23-slim
 RUN apt-get update && \
     apt-get install --no-install-recommends -y ca-certificates curl tini && \
     rm -rf /var/lib/apt/lists/*
