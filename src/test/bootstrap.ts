@@ -20,13 +20,13 @@ export const mochaHooks = {
             config.server.jwt.refreshTokenSecret = 'refreshSecret';
             mochaServices.services = await initServices();
             mochaServices.app = initApp(mochaServices.services);
-            mochaServices.server = mochaServices.app.listen((err: unknown) => {
-                if (err) throw err;
+            mochaServices.server = mochaServices.app.listen((err: Error) => {
+                throw err;
             });
         }
     ],
     afterAll: [
-        async function (): Promise<void> {
+         function (): void {
             mochaServices.services.kill.kill('SIGINT');
             mochaServices.server.close();
         }

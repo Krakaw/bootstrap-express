@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { expect } from 'chai';
 import request from 'supertest';
 
@@ -11,7 +12,7 @@ describe('JWT Echo Endpoint', () => {
         const message = 'Hello, world!';
         const response = await request(app)
             .get(`/jwt/echo/${message}`)
-            .use((req) => {
+            .use((req): void => {
                 req.set('Authorization', `Bearer ${jwt}`);
             });
 
@@ -51,7 +52,8 @@ describe('JWT Echo Endpoint', () => {
         const jwt =
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1NiIsInNjb3BlIjoicmVmcmVzaCIsImlhdCI6MTcxNjIzOTAyMn0.8dWMQCxQY7DYMTv7URTwtZzZjZzJTDNY2aLX9K0mDPQ';
         const message = 'Hello, world!';
-        const response = await request(app)
+        const res = request(app);
+        const response = await res
             .get(`/jwt/echo/${message}`)
             .use((req) => {
                 req.set('Authorization', `Bearer ${jwt}`);

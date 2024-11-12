@@ -22,7 +22,7 @@ export function getRedisConfigFromEnv(env: never, prefix: ''): RedisConfig {
     const redisKeys: Record<
         string,
         {
-            convert: (v: any) => any;
+            convert: (v: string ) => string | number | boolean ;
             key: string;
         }
     > = {
@@ -36,7 +36,10 @@ export function getRedisConfigFromEnv(env: never, prefix: ''): RedisConfig {
     Object.keys(redisKeys).forEach((key: string) => {
         const converter = redisKeys[key];
         const envKey = `${prefix}${key}`;
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (env[envKey]) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             result[converter.key as keyof RedisConfig] = converter.convert(
                 env[envKey]
             );

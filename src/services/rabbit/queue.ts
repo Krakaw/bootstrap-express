@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 import amqplib, { Channel, Connection, ConsumeMessage, Options } from 'amqplib';
 
 import config from '../../utils/config';
@@ -16,6 +17,7 @@ export type ProcessJob<DataType> = (
 ) => Promise<boolean>;
 
 export type ExchangeType =
+
     | 'direct'
     | 'topic'
     | 'headers'
@@ -27,7 +29,7 @@ export interface ExchangeOptions {
     internal?: boolean | undefined;
     autoDelete?: boolean | undefined;
     alternateExchange?: string | undefined;
-    arguments?: any;
+    arguments?: never;
 }
 export interface RabbitExchange {
     name: string;
@@ -76,7 +78,7 @@ export default class RabbitQueue<DataType> {
         this.exchange = exchange;
         this.logger = logger;
         this.queueName = queueName;
-        this.queueOptions = queueOptions || {};
+        this.queueOptions = queueOptions ?? {};
         this.routingKey = routingKey;
         this.kill = kill;
     }
@@ -117,7 +119,7 @@ export default class RabbitQueue<DataType> {
             );
         }
 
-        this.kill.on('kill', async () => {
+        this.kill.on('kill', async  (): Promise<void> => {
             this.logger.info(`Closing AMQP channel for ${this.queueName}.`);
             try {
                 await this.channel.close();
@@ -158,7 +160,7 @@ export default class RabbitQueue<DataType> {
             );
         }
 
-        return result;
+        return result as boolean;
     }
 
     async process(processJob: ProcessJob<DataType>): Promise<void> {

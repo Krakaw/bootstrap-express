@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { expect } from 'chai';
 import request from 'supertest';
 
@@ -22,6 +23,7 @@ describe('Admin Echo Endpoint', () => {
         const { app } = mochaServices;
 
         const message = 'Hello, world!';
+
         const response = await request(app).get(`/admin/echo/${message}`);
 
         expect(response.status).to.be.equal(401);

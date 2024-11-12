@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { expect } from 'chai';
 import request from 'supertest';
 
