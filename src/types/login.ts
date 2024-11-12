@@ -15,9 +15,9 @@ export interface ProviderMetadata {
             id: string;
             username: string;
             displayName: string;
-            photos: Array<{
+            photos: {
                 value: string;
-            }>;
+            }[];
         };
     };
 }

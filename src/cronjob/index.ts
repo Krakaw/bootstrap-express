@@ -21,7 +21,7 @@ export default async function initCron(services: Services): Promise<void> {
         );
         kill.on('kill', () => {
             logger.info('Stopping cron jobs');
-            jobs.forEach((job) => job.stop());
+            jobs.forEach((job) => { job.stop(); });
             resolve();
         });
     });

@@ -108,11 +108,9 @@ export default abstract class Queue<DataType>
     abstract process(job: JobData<DataType>): Promise<boolean>;
 }
 
-export interface IQueueConstructor<DataType> {
-    new (
+export type IQueueConstructor<DataType> = new (
         params: QueueParams,
         exchange?: RabbitExchange,
         queueOptions?: AssertQueue,
         routingKey?: string
-    ): Queue<DataType>;
-}
+    ) => Queue<DataType>;

@@ -49,69 +49,69 @@ export function getRedisConfigFromEnv(env: never, prefix: ''): RedisConfig {
 const env = { ...process.env };
 export default {
     app: {
-        name: env.NAME || 'server',
-        environment: env.NODE_ENV || 'development',
-        isTest: parseBoolean(env.IS_TEST || false)
+        name: env.NAME ?? 'server',
+        environment: env.NODE_ENV ?? 'development',
+        isTest: parseBoolean(env.IS_TEST  ?? false)
     },
     auth: {
         adminToken: env.AUTH_ADMIN_TOKEN,
-        adminTokenHeader: env.AUTH_ADMIN_TOKEN_HEADER || 'x-admin-token',
+        adminTokenHeader: env.AUTH_ADMIN_TOKEN_HEADER ?? 'x-admin-token',
         twitter: {
             consumerKey: env.TWITTER_CONSUMER_KEY,
             consumerSecret: env.TWITTER_CONSUMER_SECRET,
             callbackURL: env.TWITTER_CALLBACK_URL,
-            successURL: env.TWITTER_SUCCESS_URL || '/',
-            failureURL: env.TWITTER_FAILURE_URL || '/'
+            successURL: env.TWITTER_SUCCESS_URL ?? '/',
+            failureURL: env.TWITTER_FAILURE_URL ?? '/'
         }
     },
     db: {
         username: env.POSTGRES_USER,
         password: env.POSTGRES_PASSWORD,
-        database: env.POSTGRES_DB || 'database',
-        host: env.POSTGRES_HOST || '127.0.0.1',
-        port: parseInt(env.POSTGRES_PORT || '5432', 10)
+        database: env.POSTGRES_DB ?? 'database',
+        host: env.POSTGRES_HOST ?? '127.0.0.1',
+        port: parseInt(env.POSTGRES_PORT ?? '5432', 10)
     },
     log: {
-        level: env.LOG_LEVEL || 'debug',
-        target: env.LOG_TARGET || 'pino/file'
+        level: env.LOG_LEVEL ?? 'debug',
+        target: env.LOG_TARGET ?? 'pino/file'
     },
     queue: {
         // Rabbit queue url
         rabbitUrl: env.RABBITMQ_URL ?? '',
         // Rabbit Queue Name
-        queueName: env.RABBITMQ_QUEUE_NAME || 'process-queue',
+        queueName: env.RABBITMQ_QUEUE_NAME ?? 'process-queue',
         // Rabbit Exchange Details
         exchange: {
             // Rabbit Exchange Name
-            name: env.RABBITMQ_EXCHANGE_NAME || 'process-exchange',
+            name: env.RABBITMQ_EXCHANGE_NAME ?? 'process-exchange',
             // Rabbit Exchange Type
-            type: env.RABBITMQ_EXCHANGE_TYPE || 'fanout',
+            type: env.RABBITMQ_EXCHANGE_TYPE ?? 'fanout',
             // Rabbit Exchange Options
             options: {
                 // Rabbit Exchange Durable
-                durable: parseBoolean(env.RABBITMQ_EXCHANGE_DURABLE || true),
+                durable: parseBoolean(env.RABBITMQ_EXCHANGE_DURABLE ?? true),
                 // Rabbit Exchange Auto Delete
                 autoDelete: parseBoolean(
-                    env.RABBITMQ_EXCHANGE_AUTO_DELETE || false
+                    env.RABBITMQ_EXCHANGE_AUTO_DELETE ?? false
                 )
             }
         },
         // The max jobs to pull per worker
-        maxRunningJobs: parseInt(env.RABBITMQ_MAX_RUNNING_JOBS || '1', 10),
+        maxRunningJobs: parseInt(env.RABBITMQ_MAX_RUNNING_JOBS ?? '1', 10),
         // Maximum number of retries for a job
-        workerRetryMax: parseInt(env.RABBITMQ_WORKER_RETRY_MAX || '1', 10),
+        workerRetryMax: parseInt(env.RABBITMQ_WORKER_RETRY_MAX ?? '1', 10),
         // Retry strategy
-        workerRetryStrategy: env.RABBITMQ_WORKER_RETRY_STRATEGY || 'exponential'
+        workerRetryStrategy: env.RABBITMQ_WORKER_RETRY_STRATEGY ?? 'exponential'
     },
     redis: getRedisConfigFromEnv(env as never, ''),
     server: {
-        host: env.HOST || '0.0.0.0',
-        port: parseInt(env.PORT || '3000', 10),
+        host: env.HOST ?? '0.0.0.0',
+        port: parseInt(env.PORT ?? '3000', 10),
         jwt: {
-            accessTokenSecret: env.JWT_ACCESS_TOKEN_SECRET || 'secret',
-            accessTokenExpiresIn: env.JWT_ACCESS_TOKEN_EXPIRES_IN || '15m',
-            refreshTokenSecret: env.JWT_REFRESH_TOKEN_SECRET || 'secret',
-            refreshTokenExpiresIn: env.JWT_REFRESH_TOKEN_EXPIRES_IN || '30d'
+            accessTokenSecret: env.JWT_ACCESS_TOKEN_SECRET ?? 'secret',
+            accessTokenExpiresIn: env.JWT_ACCESS_TOKEN_EXPIRES_IN ?? '15m',
+            refreshTokenSecret: env.JWT_REFRESH_TOKEN_SECRET ?? 'secret',
+            refreshTokenExpiresIn: env.JWT_REFRESH_TOKEN_EXPIRES_IN ?? '30d'
         }
     }
 };

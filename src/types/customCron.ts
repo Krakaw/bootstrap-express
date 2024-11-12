@@ -1,4 +1,6 @@
-export enum CustomCronType {}
+export enum CustomCronType {
+    Other = 'other'
+}
 
 export interface CustomCronMetadata {
     ids?: string[];

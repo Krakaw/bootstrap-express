@@ -29,7 +29,7 @@ export default (services: Services): Router => {
                         user: true
                     }
                 });
-                if (!login || !login.metadata?.local?.password) {
+                if (!login?.metadata?.local?.password) {
                     cb(null, false, {
                         message: 'Incorrect username or password.'
                     });

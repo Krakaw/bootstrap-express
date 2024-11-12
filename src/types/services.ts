@@ -6,7 +6,7 @@ import { Redis } from '../services/redis';
 import Kill from '../utils/kill';
 import { Logger } from '../utils/logger';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+ 
 export interface Queues {
     processQueue: ProcessQueue;
 }

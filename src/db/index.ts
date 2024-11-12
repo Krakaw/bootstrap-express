@@ -68,8 +68,8 @@ export async function initTestDb(): Promise<DataSourceWithRepositories> {
     });
     typeormDataSource.insertQueues = function (queues: Queues): void {
         this.subscribers.forEach((subscriber) => {
-            if ((subscriber as any).setQueues) {
-                (subscriber as any).setQueues(queues);
+            if ((subscriber).setQueues) {
+                (subscriber).setQueues(queues);
             }
         });
     };

@@ -1,7 +1,6 @@
-version: "3"
 services:
   db:
-    image: postgres:14
+    image: postgres:latest
     shm_size: 1gb
     volumes:
       - postgres:/var/lib/postgresql/data

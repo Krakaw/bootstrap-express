@@ -1,13 +1,12 @@
-import express from 'express';
-
+import { Request, Response, NextFunction } from 'express';
 import config from '../../utils/config';
 
-// eslint-disable-next-line consistent-return
+
 export default function requireToken(
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-): Express.Response | void {
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Response | undefined {
     if (
         !config.auth.adminToken ||
         config.auth.adminToken !== req.header(config.auth.adminTokenHeader)

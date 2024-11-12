@@ -62,7 +62,7 @@ export default class Cache<T> extends EventEmitter {
             clearTimeout(oldValue.removeTimeout);
         }
         this.cache.set(key, {
-            data: innerValue as T,
+            data: innerValue,
             expiryTimestamp: expiryMs ? Date.now() + expiryMs : undefined,
             count: oldValue?.count ? oldValue.count + 1 : 1,
             removeTimeout:

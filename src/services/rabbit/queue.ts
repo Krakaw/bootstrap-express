@@ -169,11 +169,11 @@ export default class RabbitQueue<DataType> {
                 if (!msg) {
                     return;
                 }
-                const data = JSON.parse(msg?.content.toString('utf8') || '{}');
+                const data = JSON.parse(msg.content.toString('utf8') || '{}');
                 if (!data.id) {
                     this.logger.error(
                         'Got a job without an id, aborting',
-                        msg?.content.toString('utf8')
+                        msg.content.toString('utf8')
                     );
                     this.channel.ack(msg);
                     return;
@@ -185,8 +185,8 @@ export default class RabbitQueue<DataType> {
                 } catch (e) {
                     const retryCount =
                         parseInt(
-                            msg?.properties?.headers
-                                ? msg?.properties?.headers['x-retry-count']
+                            msg.properties.headers
+                                ? msg.properties.headers['x-retry-count']
                                 : '0',
                             10
                         ) + 1;

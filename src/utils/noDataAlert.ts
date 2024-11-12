@@ -7,8 +7,8 @@ class NoDataAlert {
 
     addAlert(
         { expireInterval, backoff }: ExpireOptions,
-        webhookUrl,
-        message
+        webhookUrl: string | URL,
+        message: string
     ): Expire {
         const expire = new Expire({
             expireInterval,
@@ -21,7 +21,7 @@ class NoDataAlert {
                     logger.warn(message);
                     return;
                 }
-                fetch(webhookUrl, {
+                void fetch(webhookUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -29,7 +29,7 @@ class NoDataAlert {
                     body: JSON.stringify({
                         text: `${message}${
                             lastHeartbeat
-                                ? `\nLast heartbeat: ${lastHeartbeat}`
+                                ? `\nLast heartbeat: ${lastHeartbeat.toISOString()}`
                                 : ''
                         }`
                     })

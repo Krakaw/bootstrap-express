@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-shadow */
+ 
 import initDb, { initTestDb } from '../db';
 import { Pubsub } from '../pubsub';
 import Queue, { IQueueConstructor } from '../queue';
@@ -99,11 +99,11 @@ export default async function initServices(): Promise<Services> {
         pubsub
     };
 
-    // eslint-disable-next-line no-restricted-syntax
+     
     for (const key of Object.keys(queues)) {
         logger.debug(`Initializing Queue ${key}...`);
-        // eslint-disable-next-line no-await-in-loop
-        await queues[key as keyof Queues]?.init(services);
+         
+        await queues[key as keyof Queues].init(services);
         logger.debug(`Queue ${key} Initialized`);
     }
 

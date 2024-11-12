@@ -22,7 +22,7 @@ export default async function initCustomCron(
             );
             return new CronJob(
                 customCron.cron,
-                async () => {
+                () => {
                     switch (customCron.type) {
                         default:
                             logger.error(
@@ -35,13 +35,13 @@ export default async function initCustomCron(
                 'UTC'
             );
         })
-        .filter((job) => job !== undefined) as CronJob[];
+        .filter((job) => job !== undefined);
 
     logger.info(`⚡ ${jobs.length} cron jobs started`);
     return new Promise((resolve) => {
         kill.on('kill', () => {
             logger.info('Stopping custom cron jobs');
-            jobs.forEach((job) => job.stop());
+            jobs.forEach((job) => { job.stop(); });
             resolve();
         });
     });

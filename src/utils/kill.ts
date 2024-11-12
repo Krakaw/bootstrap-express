@@ -34,8 +34,8 @@ export default class Kill extends EventEmitter {
         this.count += 1;
 
         if (this.count > 2) {
-            // eslint-disable-next-line no-console
-            console.log(`\nForcing exit at ${new Date()}\n`);
+
+            console.log(`\nForcing exit at ${(new Date()).toISOString()}\n`);
             process.exit(1);
         }
     }

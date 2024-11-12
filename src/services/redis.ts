@@ -1,14 +1,14 @@
 import EventEmitter from 'events';
-import CreateClient from 'ioredis';
+import CreateClient, { Redis as RedisClient, Result } from 'ioredis';
 import IoRedisMock from 'ioredis-mock';
 
 import systemConfig, { RedisConfig } from '../utils/config';
 import { Logger } from '../utils/logger';
 
 export class Redis extends EventEmitter {
-    public readonly client;
+    public readonly client!: RedisClient;
 
-    private readonly logger;
+    private readonly logger:  Logger | undefined;
 
     constructor(redis: Redis);
 
@@ -21,21 +21,30 @@ export class Redis extends EventEmitter {
             this.logger = config.logger;
             return;
         }
-        this.logger = logger?.child({
-            service: 'redis'
-        });
-        const redisConfig: any = { ...config };
+        this.logger = logger;
+        const redisConfig: {
+            lazyConnect?: boolean;
+            password?: string;
+            port?: number;
+            url?: string;
+            prefix?: string;
+            host?: string;
+            name?: string;
+            maxRetriesPerRequest?: number | null;
+            enableReadyCheck?: boolean;
+            username?: string
+        } = { ...config };
         delete redisConfig.url;
         delete redisConfig.prefix;
 
         this.client = systemConfig.app.isTest
             ? new IoRedisMock()
             : new CreateClient(redisConfig);
-        this.client.on('error', (err: any) =>
-            this.logger.error({ message: 'Redis Client Error', err })
+        this.client.on('error', (err: Error) =>
+            { this.logger?.error({ message: 'Redis Client Error', err }); }
         );
         this.client.on('ready', () => {
-            this.logger.debug(`Redis connected`);
+            this.logger?.debug(`Redis connected`);
             this.emit('ready');
         });
     }
@@ -70,7 +79,7 @@ export class Redis extends EventEmitter {
 
     async set(
         key: string,
-        value: string | boolean | number,
+        value: string | Buffer | number,
         expiry?: number
     ): Promise<string> {
         if (expiry) {
@@ -87,8 +96,9 @@ export class Redis extends EventEmitter {
         let cursor = 0;
         let results: string[] = [];
         do {
-            // eslint-disable-next-line no-await-in-loop
-            const result: any = await this.client.scan(
+
+            // eslint-disable-next-line
+            const result: Result<any, any> = await this.client.scan(
                 cursor,
                 'MATCH',
                 pattern,
@@ -96,7 +106,9 @@ export class Redis extends EventEmitter {
                 100
             );
             if (result) {
+                // eslint-disable-next-line
                 cursor = result.shift();
+                // eslint-disable-next-line
                 results = results.concat(result[1]);
             }
         } while (cursor > 0);
@@ -104,7 +116,7 @@ export class Redis extends EventEmitter {
     }
 
     async flushAll(): Promise<string> {
-        this.logger.info(`Flushing all records`);
+        this.logger?.info(`Flushing all records`);
         return this.client.flushall();
     }
 }

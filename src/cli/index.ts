@@ -12,22 +12,21 @@ export default async function init(argv: Arguments): Promise<void> {
     logger.debug(`Version: ${version}`);
     const services = await initServices();
     const { _ = ['server'] } = argv;
-    const command = ((_.pop() as string) || '').toLowerCase()?.trim();
+    const command = ((_.pop() as string) || '').toLowerCase().trim() as Command;
     switch (command) {
         case Command.Cron:
             await initCron(services);
             break;
-        case Command.Queue:
-            {
-                const { name } = argv;
-                switch (name) {
-                    case CommandQueue.Processor:
-                        await startProcessor(services);
-                        break;
-                    default:
-                        logger.error(`Unknown queue: ${name}`);
-                }
+        case Command.Queue: {
+            const { name } = argv;
+            switch (name) {
+                case CommandQueue.Processor:
+                    startProcessor(services);
+                    break;
+                default:
+                    logger.error(`Unknown queue: ${name as string}`);
             }
+        }
             break;
         case Command.Server:
         default:
