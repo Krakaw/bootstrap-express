@@ -5,8 +5,8 @@
     "main": "index.js",
     "scripts": {
         "prepare": "husky install",
-        "test": "env LOG_LEVEL=error mocha --recursive --import tsx --require ./src/test/bootstrap.ts  \"./src/test/**/*.ts\" ",
-        "ci:test": "mocha --timeout=10000 --exit --allow-uncaught --recursive --import tsx --require ./src/test/bootstrap.ts  \"./src/test/**/*.ts\" ",
+        "test": "env LOG_LEVEL=error mocha --recursive --import tsx/esm --require ./src/test/bootstrap.ts  \"./src/test/**/*.ts\" ",
+        "ci:test": "mocha --timeout=10000 --exit --allow-uncaught --recursive --import tsx/esm --require ./src/test/bootstrap.ts  \"./src/test/**/*.ts\" ",
         "d": "nodemon -- ",
         "dev": "nodemon -- server",
         "dev-process": "nodemon -- process",
