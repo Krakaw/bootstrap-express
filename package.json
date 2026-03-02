@@ -40,9 +40,9 @@
     "dependencies": {
         "@krakaw/expire": "^1.0.2",
         "amqplib": "^0.10.4",
-        "bcryptjs": "^2.4.3",
+        "bcryptjs": "^3.0.3",
         "cookie-parser": "^1.4.7",
-        "cron": "^3.1.9",
+        "cron": "^4.4.0",
         "dotenv": "^16.4.5",
         "express": "^4.21.1",
         "express-async-errors": "^3.1.1",
@@ -60,12 +60,12 @@
         "ts-mixer": "^6.0.4",
         "typeorm": "^0.3.20",
         "typeorm-naming-strategies": "^4.1.0",
-        "yargs": "^17.7.2"
+        "yargs": "^18.0.0"
     },
     "devDependencies": {
         "@eslint/js": "^9.14.0",
         "@types/amqplib": "^0.10.5",
-        "@types/bcryptjs": "^2.4.6",
+        "@types/bcryptjs": "^3.0.0",
         "@types/chai": "^5.0.1",
         "@types/cookie-parser": "^1.4.7",
         "@types/cron": "^2.4.3",
